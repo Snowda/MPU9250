@@ -1,10 +1,8 @@
-// I2C device class (I2Cdev) demonstration Arduino sketch for MPU9150
-// 1/4/2013 original by Jeff Rowberg <jeff@rowberg.net> at https://github.com/jrowberg/i2cdevlib
-//          modified by Aaron Weiss <aaron@sparkfun.com>
+// I2C device class (I2Cdev) demonstration Arduino sketch for MPU9250
+// 1/4/2013 original by Conor Forde <me@conorforde.com> at https://github.com/Snowda/MPU9250
 //
 // Changelog:
-//     2011-10-07 - initial release
-//     2013-1-4 - added raw magnetometer output
+//     2014-03-27 - initial release
 
 /* ============================================
 I2Cdev device library code is placed under the MIT license
@@ -36,13 +34,13 @@ THE SOFTWARE.
 // I2Cdev and MPU9150 must be installed as libraries, or else the .cpp/.h files
 // for both classes must be in the include path of your project
 #include "I2Cdev.h"
-#include "MPU9150.h"
+#include "MPU9250.h"
 
 // class default I2C address is 0x68
 // specific I2C addresses may be passed as a parameter here
 // AD0 low = 0x68 (default for InvenSense evaluation board)
 // AD0 high = 0x69
-MPU9150 accelgyro;
+MPU9250 accelgyro;
 
 int16_t ax, ay, az;
 int16_t gx, gy, gz;
@@ -66,7 +64,7 @@ void setup() {
 
     // verify connection
     Serial.println("Testing device connections...");
-    Serial.println(accelgyro.testConnection() ? "MPU9150 connection successful" : "MPU9150 connection failed");
+    Serial.println(accelgyro.testConnection() ? "MPU9250 connection successful" : "MPU9250 connection failed");
 
     // configure Arduino LED for
     pinMode(LED_PIN, OUTPUT);
