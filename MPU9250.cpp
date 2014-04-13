@@ -121,8 +121,7 @@ void MPU9250::setAuxVDDIOLevel(uint8_t level) {
  * @see MPU9250_RA_SMPLRT_DIV
  */
 uint8_t MPU9250::getRate(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_SMPLRT_DIV, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_SMPLRT_DIV);
 }
 /** Set gyroscope sample rate divider.
  * @param rate New sample rate divider
@@ -395,8 +394,7 @@ void MPU9250::setDHPFMode(uint8_t bandwidth) {
  * @see MPU9250_RA_FF_THR
  */
 uint8_t MPU9250::getFreefallDetectionThreshold(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_FF_THR, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_FF_THR);
 }
 /** Get free-fall event acceleration threshold.
  * @param threshold New free-fall acceleration threshold value (LSB = 2mg)
@@ -427,8 +425,7 @@ void MPU9250::setFreefallDetectionThreshold(uint8_t threshold) {
  * @see MPU9250_RA_FF_DUR
  */
 uint8_t MPU9250::getFreefallDetectionDuration(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_FF_DUR, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_FF_DUR);
 }
 /** Get free-fall event duration threshold.
  * @param duration New free-fall duration threshold value (LSB = 1ms)
@@ -461,8 +458,7 @@ void MPU9250::setFreefallDetectionDuration(uint8_t duration) {
  * @see MPU9250_RA_MOT_THR
  */
 uint8_t MPU9250::getMotionDetectionThreshold(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_MOT_THR, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_MOT_THR);
 }
 /** Set free-fall event acceleration threshold.
  * @param threshold New motion detection acceleration threshold value (LSB = 2mg)
@@ -491,8 +487,7 @@ void MPU9250::setMotionDetectionThreshold(uint8_t threshold) {
  * @see MPU9250_RA_MOT_DUR
  */
 uint8_t MPU9250::getMotionDetectionDuration(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_MOT_DUR, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_MOT_DUR);
 }
 /** Set motion detection event duration threshold.
  * @param duration New motion detection duration threshold value (LSB = 1ms)
@@ -531,8 +526,7 @@ void MPU9250::setMotionDetectionDuration(uint8_t duration) {
  * @see MPU9250_RA_ZRMOT_THR
  */
 uint8_t MPU9250::getZeroMotionDetectionThreshold(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_ZRMOT_THR, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_ZRMOT_THR);
 }
 /** Set zero motion detection event acceleration threshold.
  * @param threshold New zero motion detection acceleration threshold value (LSB = 2mg)
@@ -562,8 +556,7 @@ void MPU9250::setZeroMotionDetectionThreshold(uint8_t threshold) {
  * @see MPU9250_RA_ZRMOT_DUR
  */
 uint8_t MPU9250::getZeroMotionDetectionDuration(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_ZRMOT_DUR, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_ZRMOT_DUR);
 }
 /** Set zero motion detection event duration threshold.
  * @param duration New zero motion detection duration threshold value (LSB = 1ms)
@@ -900,8 +893,7 @@ void MPU9250::setMasterClockSpeed(uint8_t speed) {
  */
 uint8_t MPU9250::getSlaveAddress(uint8_t num) {
     if (num > 3) return 0;
-    I2Cdev::readByte(_address, MPU9250_RA_I2C_SLV0_ADDR + num*3, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_I2C_SLV0_ADDR + num*3);
 }
 /** Set the I2C address of the specified slave (0-3).
  * @param num Slave number (0-3)
@@ -926,8 +918,7 @@ void MPU9250::setSlaveAddress(uint8_t num, uint8_t address) {
  */
 uint8_t MPU9250::getSlaveRegister(uint8_t num) {
     if (num > 3) return 0;
-    I2Cdev::readByte(_address, MPU9250_RA_I2C_SLV0_REG + num*3, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_I2C_SLV0_REG + num*3);
 }
 /** Set the active internal register for the specified slave (0-3).
  * @param num Slave number (0-3)
@@ -1073,8 +1064,7 @@ void MPU9250::setSlaveDataLength(uint8_t num, uint8_t length) {
  * @see MPU9250_RA_I2C_SLV4_ADDR
  */
 uint8_t MPU9250::getSlave4Address(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_I2C_SLV4_ADDR, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_I2C_SLV4_ADDR);
 }
 /** Set the I2C address of Slave 4.
  * @param address New address for Slave 4
@@ -1092,8 +1082,7 @@ void MPU9250::setSlave4Address(uint8_t address) {
  * @see MPU9250_RA_I2C_SLV4_REG
  */
 uint8_t MPU9250::getSlave4Register(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_I2C_SLV4_REG, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_I2C_SLV4_REG);
 }
 /** Set the active internal register for Slave 4.
  * @param reg New active register for Slave 4
@@ -1206,8 +1195,7 @@ void MPU9250::setSlave4MasterDelay(uint8_t delay) {
  * @see MPU9250_RA_I2C_SLV4_DI
  */
 uint8_t MPU9250::getSlate4InputByte(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_I2C_SLV4_DI, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_I2C_SLV4_DI);
 }
 
 // I2C_MST_STATUS register
@@ -1485,8 +1473,7 @@ void MPU9250::setClockOutputEnabled(bool enabled) {
  * @see MPU9250_INTERRUPT_FF_BIT
  **/
 uint8_t MPU9250::getIntEnabled(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_INT_ENABLE, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_INT_ENABLE);
 }
 /** Set full interrupt enabled status.
  * Full register byte for all interrupts, for quick reading. Each bit should be
@@ -1626,8 +1613,7 @@ void MPU9250::setIntDataReadyEnabled(bool enabled) {
  * @see MPU9250_RA_INT_STATUS
  */
 uint8_t MPU9250::getIntStatus(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_INT_STATUS, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_INT_STATUS);
 }
 /** Get Free Fall interrupt status.
  * This bit automatically sets to 1 when a Free Fall interrupt has been
@@ -1977,8 +1963,7 @@ int16_t MPU9250::getRotationZ(void) {
  * @return Byte read from register
  */
 uint8_t MPU9250::getExternalSensorByte(int position) {
-    I2Cdev::readByte(_address, MPU9250_RA_EXT_SENS_DATA_00 + position, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_EXT_SENS_DATA_00 + position);
 }
 /** Read word (2 bytes) from external sensor data registers.
  * @param position Starting position (0-21)
@@ -2692,8 +2677,7 @@ uint16_t MPU9250::getFIFOCount(void) {
  * @return Byte from FIFO buffer
  */
 uint8_t MPU9250::getFIFOByte(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_FIFO_R_W, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_FIFO_R_W);
 }
 void MPU9250::getFIFOBytes(uint8_t *data, uint8_t length) {
     I2Cdev::readBytes(_address, MPU9250_RA_FIFO_R_W, length, data);
@@ -2774,8 +2758,7 @@ void MPU9250::setZGyroOffset(int8_t offset) {
 // X_FINE_GAIN register
 
 int8_t MPU9250::getXFineGain(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_X_FINE_GAIN, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_X_FINE_GAIN);
 }
 void MPU9250::setXFineGain(int8_t gain) {
     I2Cdev::writeByte(_address, MPU9250_RA_X_FINE_GAIN, gain);
@@ -2784,8 +2767,7 @@ void MPU9250::setXFineGain(int8_t gain) {
 // Y_FINE_GAIN register
 
 int8_t MPU9250::getYFineGain(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_Y_FINE_GAIN, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_Y_FINE_GAIN);
 }
 void MPU9250::setYFineGain(int8_t gain) {
     I2Cdev::writeByte(_address, MPU9250_RA_Y_FINE_GAIN, gain);
@@ -2794,8 +2776,7 @@ void MPU9250::setYFineGain(int8_t gain) {
 // Z_FINE_GAIN register
 
 int8_t MPU9250::getZFineGain(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_Z_FINE_GAIN, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_Z_FINE_GAIN);
 }
 void MPU9250::setZFineGain(int8_t gain) {
     I2Cdev::writeByte(_address, MPU9250_RA_Z_FINE_GAIN, gain);
@@ -2948,8 +2929,7 @@ void MPU9250::setMemoryStartAddress(uint8_t address) {
 // MEM_R_W register
 
 uint8_t MPU9250::readMemoryByte(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_MEM_R_W, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_MEM_R_W);
 }
 void MPU9250::writeMemoryByte(uint8_t data) {
     I2Cdev::writeByte(_address, MPU9250_RA_MEM_R_W, data);
@@ -3146,8 +3126,7 @@ bool MPU9250::writeProgDMPConfigurationSet(const uint8_t *data, uint16_t dataSiz
 // DMP_CFG_1 register
 
 uint8_t MPU9250::getDMPConfig1(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_DMP_CFG_1, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_DMP_CFG_1);
 }
 void MPU9250::setDMPConfig1(uint8_t config) {
     I2Cdev::writeByte(_address, MPU9250_RA_DMP_CFG_1, config);
@@ -3156,8 +3135,7 @@ void MPU9250::setDMPConfig1(uint8_t config) {
 // DMP_CFG_2 register
 
 uint8_t MPU9250::getDMPConfig2(void) {
-    I2Cdev::readByte(_address, MPU9250_RA_DMP_CFG_2, buffer);
-    return buffer[0];
+    return readRegister(MPU9250_RA_DMP_CFG_2);
 }
 void MPU9250::setDMPConfig2(uint8_t config) {
     I2Cdev::writeByte(_address, MPU9250_RA_DMP_CFG_2, config);

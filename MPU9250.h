@@ -152,6 +152,11 @@ THE SOFTWARE.
 
 //#define MPU9250_       0x
 
+//reset values
+#define WHOAMI_RESET_VAL			0x71
+#define POWER_MANAGMENT_1_RESET_VAL 0x01
+#define DEFAULT_RESET_VALUE 		0x00
+
 class MPU9250 {
     public:
         MPU9250();
@@ -161,7 +166,24 @@ class MPU9250 {
         void getMotion9(uint8_t ax, uint8_t ay, uint8_t az, uint8_t gx, uint8_t gy, uint8_t gz, uint8_t mx, uint8_t my, uint8_t mz);
         void getRotation(uint8_t gx, uint8_t gy, uint8_t gz);
         void getAcceleration(uint8_t ax, uint8_t ay, uint8_t az);
+        void getGyroTestData(uint8_t gx, uint8_t gy, uint8_t gz);
+        void getAccelerometerTestData(uint8_t ax, uint8_t ay, uint8_t az);
+        uint8_t getWhoAmI(void);
+        void selectClock(uint8_t clock_type);
+        void disableAccelerometerAxis(uint8_t axis);
+        void disableAccelerometer(void);
+        void disableGyroAxis(uint8_t axis);
+        void disableGyro(void);
+        bool enableAccelerometerAxis(uint8_t axis);
+        uint8_t enableAccelerometer(void);
+        bool enableGyroAxis(uint8_t axis);
+        uint8_t enableGyro(void);
+
     private:
+    	void writeRegister(uint8_t register_addr, uint8_t value);
+    	uint8_t readRegister(uint8_t register_addr);
+    	_address;
+    	_whoami;
 };
 
 #endif /* _MPU9250_H_ */
