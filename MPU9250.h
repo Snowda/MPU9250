@@ -1,43 +1,18 @@
-// I2Cdev library collection - MPU9250 I2C device class
-// Based on InvenSense MPU-9250 register map document rev. 1.4, 9/9/2013 (RM-MPU-9250A-00)
-// 27/3/2014 by Conor Forde <me@conorforde.com>
-// Updates should (hopefully) always be available at https://github.com/Snowda/MPU9250
-//
-// Changelog:
-//     ... - ongoing debug release
+/** Based on InvenSense MPU-9250 register map document rev. 1.4, 9/9/2013 (RM-MPU-9250A-00)
+* 13/04/2014 by Conor Forde <me@conorforde.com>
+* Updates should be available at https://github.com/Snowda/MPU9250
+*
+* Changelog:
+*     ... - ongoing development release
 
-// NOTE: THIS IS ONLY A PARIAL RELEASE. THIS DEVICE CLASS IS CURRENTLY UNDERGOING ACTIVE
-// DEVELOPMENT AND IS STILL MISSING SOME IMPORTANT FEATURES. PLEASE KEEP THIS IN MIND IF
-// YOU DECIDE TO USE THIS PARTICULAR CODE FOR ANYTHING.
-
-/* ============================================
-I2Cdev device library code is placed under the MIT license
-Copyright (c) 2014 Conor Forde
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-===============================================
+* NOTE: THIS IS ONLY A PARIAL RELEASE. 
+* THIS DEVICE CLASS IS CURRENTLY UNDERGOING ACTIVE DEVELOPMENT AND IS MISSING MOST FEATURES. 
+* PLEASE KEEP THIS IN MIND IF YOU DECIDE TO USE THIS PARTICULAR CODE FOR ANYTHING.
 */
 
 #ifndef _MPU9250_H_
 #define _MPU9250_H_
 
-#include "I2Cdev.h"
 #include <avr/pgmspace.h>
 //MPU9250 Register map
 
@@ -157,33 +132,53 @@ THE SOFTWARE.
 #define POWER_MANAGMENT_1_RESET_VAL 0x01
 #define DEFAULT_RESET_VALUE 		0x00
 
+#define WHOAMI_DEFAULT_VAL 			0x68
+
 class MPU9250 {
     public:
         MPU9250();
         MPU9150(uint8_t address);
+        uint8_t getDeviceID(void);
         void testConnection();
         void initialize();
         void getMotion9(uint8_t ax, uint8_t ay, uint8_t az, uint8_t gx, uint8_t gy, uint8_t gz, uint8_t mx, uint8_t my, uint8_t mz);
-        void getRotation(uint8_t gx, uint8_t gy, uint8_t gz);
-        void getAcceleration(uint8_t ax, uint8_t ay, uint8_t az);
-        void getGyroTestData(uint8_t gx, uint8_t gy, uint8_t gz);
-        void getAccelerometerTestData(uint8_t ax, uint8_t ay, uint8_t az);
-        uint8_t getWhoAmI(void);
         void selectClock(uint8_t clock_type);
-        void disableAccelerometerAxis(uint8_t axis);
-        void disableAccelerometer(void);
-        void disableGyroAxis(uint8_t axis);
-        void disableGyro(void);
-        bool enableAccelerometerAxis(uint8_t axis);
-        uint8_t enableAccelerometer(void);
-        bool enableGyroAxis(uint8_t axis);
-        uint8_t enableGyro(void);
+
+        //acceleration functions
+        uint8_t enableAccelerometerAxis(uint8_t axis);
+        uint8_t disableAccelerometerAxis(uint8_t axis);
+        bool enableAccelerometer(void);
+        bool disableAccelerometer(void);
+
+        void getAccelerometerTestData(uint8_t ax, uint8_t ay, uint8_t az);
+        void getAcceleration(uint8_t ax, uint8_t ay, uint8_t az);
+        
+        //gyroscope functions
+        uint8_t enableGyroAxis(uint8_t axis);
+        uint8_t disableGyroAxis(uint8_t axis);
+        bool enableGyro(void);
+        bool disableGyro(void);
+
+        void getGyroTestData(uint8_t gx, uint8_t gy, uint8_t gz);
+        void getRotation(uint8_t gx, uint8_t gy, uint8_t gz);
+
+        //temperature functions
+		void enableTemperature(void);
+		void disableTemperature(void);
+		bool temperatureIsEnabled(void);
+        int16_t getTemperature(void);
 
     private:
     	void writeRegister(uint8_t register_addr, uint8_t value);
+    	void writeRegisters(uint8_t msb_register, uint8_t lsb_register);
+
     	uint8_t readRegister(uint8_t register_addr);
+		uint16_t readRegisters(uint8_t msb_register, uint8_t lsb_register);
+		uint8_t readMaskedRegister(uint8_t register_addr, uint8_t mask);
+
     	_address;
     	_whoami;
+    	_temperature;
 };
 
 #endif /* _MPU9250_H_ */
