@@ -85,8 +85,6 @@ void MPU9250::setAuxVDDIOLevel(uint8_t level) {
     I2Cdev::writeBit(_address, MPU9250_RA_YG_OFFS_TC, MPU9250_TC_PWR_MODE_BIT, level);
 }
 
-// SMPLRT_DIV register
-
 /** Get gyroscope output rate divider.
  * The sensor register output, FIFO output, DMP sampling, Motion detection, Zero
  * Motion detection, and Free Fall detection are all based on the Sample Rate.
@@ -3162,15 +3160,57 @@ bool MPU9250::disableAccelerometer(void) {
 }
 
 void MPU9250::getAccelerometerTestData(uint8_t ax, uint8_t ay, uint8_t az) {
-        ax = readRegister(UNKNOWN_REGISTER); 
-        ay = readRegister(UNKNOWN_REGISTER); 
-        az = readRegister(UNKNOWN_REGISTER); 
+        ax = readRegister(MPU9250_SELF_TEST_X_ACCEL); 
+        ay = readRegister(MPU9250_SELF_TEST_Y_ACCEL); 
+        az = readRegister(MPU9250_SELF_TEST_Z_ACCEL); 
 }
 
-void MPU9250::getAcceleration(uint8_t ax, uint8_t ay, uint8_t az) {
-        ax = readRegister(UNKNOWN_REGISTER); 
-        ay = readRegister(UNKNOWN_REGISTER); 
-        az = readRegister(UNKNOWN_REGISTER); 
+bool MPU9250::accelerometerXIsEnabled(void) {
+    //WARNING: this should be verified here
+    uint8_t status = readMaskedRegister(MPU9250_PWR_MGMT_2, MPU9250_DISABLE_XA_MASK); //these need to be defined
+    return (status != 0)
+}
+
+bool MPU9250::accelerometerYIsEnabled(void) {
+    //WARNING: this should be verified here
+    uint8_t status = readMaskedRegister(MPU9250_PWR_MGMT_2, MPU9250_DISABLE_YA_MASK); //these need to be defined
+    return (status != 0)
+}
+
+bool MPU9250::accelerometerZIsEnabled(void) {
+    //WARNING: this should be verified here
+    uint8_t status = readMaskedRegister(MPU9250_PWR_MGMT_2, MPU9250_DISABLE_ZA_MASK); //these need to be defined
+    return (status != 0)
+}
+
+int16_t MPU9250::getXAcceleration(void) {
+    if(accelerometerXIsEnabled()){
+        return (int16_t) readRegisters(MPU9250_ACCEL_XOUT_H, MPU9250_ACCEL_XOUT_L);
+    } else {
+        return 0;
+    }
+}
+
+int16_t MPU9250::getYAcceleration(void) {
+    if(accelerometerYIsEnabled()){
+        return (int16_t) readRegisters(MPU9250_ACCEL_YOUT_H, MPU9250_ACCEL_YOUT_L);
+    } else {
+        return 0;
+    }
+}
+
+int16_t MPU9250::getZAcceleration(void) {
+    if(accelerometerZIsEnabled()){
+        return (int16_t) readRegisters(MPU9250_ACCEL_ZOUT_H, MPU9250_ACCEL_ZOUT_L);
+    } else {
+        return 0;
+    }
+}
+
+void MPU9250::getAcceleration(uint16_t ax, uint16_t ay, uint16_t az) {
+        ax = getXAcceleration(); 
+        ay = getYAcceleration(); 
+        az = getZAcceleration();
 }
 
 //Gyroscope functions
@@ -3204,15 +3244,57 @@ bool MPU9250::disableGyro(void) {
 }
 
 void MPU9250::getGyroTestData(uint8_t gx, uint8_t gy, uint8_t gz) {
-        gx = readRegister(UNKNOWN_REGISTER); 
-        gy = readRegister(UNKNOWN_REGISTER); 
-        gz = readRegister(UNKNOWN_REGISTER);
+        gx = readRegister(MPU9250_SELF_TEST_X_GYRO); 
+        gy = readRegister(MPU9250_SELF_TEST_Y_GYRO); 
+        gz = readRegister(MPU9250_SELF_TEST_Z_GYRO);
 }
 
-void MPU9250::getRotation(uint8_t gx, uint8_t gy, uint8_t gz) {
-        gx = readRegister(UNKNOWN_REGISTER); 
-        gy = readRegister(UNKNOWN_REGISTER); 
-        gz = readRegister(UNKNOWN_REGISTER); 
+bool MPU9250::gyroXIsEnabled(void) {
+    //WARNING: this should be verified here
+    uint8_t status = readMaskedRegister(MPU9250_PWR_MGMT_2, MPU9250_DISABLE_ZG_MASK);
+    return (status != 0)
+}
+
+bool MPU9250::gyroYIsEnabled(void) {
+    //WARNING: this should be verified here
+    uint8_t status = readMaskedRegister(MPU9250_PWR_MGMT_2, MPU9250_DISABLE_ZG_MASK);
+    return (status != 0)
+}
+
+bool MPU9250::gyroZIsEnabled(void) {
+    //WARNING: this should be verified here
+    uint8_t status = readMaskedRegister(MPU9250_PWR_MGMT_2, MPU9250_DISABLE_ZG_MASK);
+    return (status != 0)
+}
+
+int16_t MPU9250::getXRotation(void) {
+    if(gyroXIsEnabled()){
+        return (int16_t) readRegisters(MPU9250_GYRO_XOUT_H, MPU9250_GYRO_XOUT_L); 
+    } else {
+        return 0;
+    }
+}
+
+int16_t MPU9250::getYRotation(void) {
+    if(gyroYIsEnabled()){
+        return (int16_t) readRegisters(MPU9250_GYRO_YOUT_H, MPU9250_GYRO_YOUT_L); 
+    } else {
+        return 0;
+    }
+}
+
+int16_t MPU9250::getZRotation(void) {
+    if(gyroZIsEnabled()){
+        return (int16_t) readRegisters(MPU9250_GYRO_ZOUT_H, MPU9250_GYRO_ZOUT_L); 
+    } else {
+        return 0;
+    }
+}
+
+void MPU9250::getRotation(uint16_t gx, uint16_t gy, uint16_t gz) {
+        gx = getXRotation(); 
+        gy = getYRotation(); 
+        gz = getZRotation();
 }
 
 //Temperature functions
