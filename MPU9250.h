@@ -132,6 +132,133 @@
 
 #define WHOAMI_DEFAULT_VAL              0x68
 
+//CONFIG register masks
+#define MPU9250_FIFO_MODE_MASK          0x40
+#define MPU9250_EXT_SYNC_SET_MASK       0x38
+#define MPU9250_DLPF_CFG_MASK           0x07
+
+//GYRO_CONFIG register masks
+#define MPU9250_XGYRO_CTEN_MASK         0x80
+#define MPU9250_YGYRO_CTEN_MASK         0x40
+#define MPU9250_ZGYRO_CTEN_MASK         0x20
+#define MPU9250_GYRO_FS_SEL_MASK        0x18
+#define MPU9250_FCHOICE_B_MASK          0x03
+
+//ACCEL_CONFIG register masks
+#define MPU9250_AX_ST_EN_MASK           0x80
+#define MPU9250_AY_ST_EN_MASK           0x40
+#define MPU9250_AZ_ST_EN_MASK           0x20
+#define MPU9250_ACCEL_FS_SEL_MASK       0x18
+
+//ACCEL_CONFIG_2 register masks
+#define MPU9250_ACCEL_FCHOICE_B_MASK    0xC0
+#define MPU9250_A_DLPF_CFG_MASK         0x03
+
+//LP_ACCEL_ODR register masks
+#define MPU9250_LPOSC_CLKSEL_MASK       0x0F
+
+//FIFO_EN register masks
+#define MPU9250_TEMP_FIFO_EN_MASK       0x80
+#define MPU9250_GYRO_XOUT_MASK          0x40
+#define MPU9250_GYRO_YOUT_MASK          0x20
+#define MPU9250_GYRO_ZOUT_MASK          0x10
+#define MPU9250_ACCEL_MASK              0x08
+#define MPU9250_SLV2_MASK               0x04
+#define MPU9250_SLV1_MASK               0x02
+#define MPU9250_SLV0_MASK               0x01
+
+//I2C_MST_CTRL register masks
+#define MPU9250_MULT_MST_EN_MASK        0x80
+#define MPU9250_WAIT_FOR_ES_MASK        0x40
+#define MPU9250_SLV_3_FIFO_EN_MASK      0x20
+#define MPU9250_I2C_MST_P_NSR_MASK      0x10
+#define MPU9250_I2C_MST_CLK_MASK        0x0F
+
+//I2C_SLV0_ADDR register masks
+#define MPU9250_I2C_SLV0_RNW_MASK       0x80
+#define MPU9250_I2C_ID_0_MASK           0x7F
+
+//I2C_SLV0_CTRL register masks
+#define MPU9250_I2C_SLV0_EN_MASK        0x80
+#define MPU9250_I2C_SLV0_BYTE_SW_MASK   0x40
+#define MPU9250_I2C_SLV0_REG_DIS_MASK   0x20
+#define MPU9250_I2C_SLV0_GRP_MASK       0x10
+#define MPU9250_I2C_SLV0_LENG_MASK      0x0F
+
+//I2C_SLV1_ADDR register masks
+#define MPU9250_I2C_SLV1_RNW_MASK       0x80
+#define MPU9250_I2C_ID_1_MASK           0x7F
+
+//I2C_SLV1_CTRL register masks
+#define MPU9250_I2C_SLV1_EN_MASK        0x80
+#define MPU9250_I2C_SLV1_BYTE_SW_MASK   0x40
+#define MPU9250_I2C_SLV1_REG_DIS_MASK   0x20
+#define MPU9250_I2C_SLV1_GRP_MASK       0x10
+#define MPU9250_I2C_SLV1_LENG_MASK      0x0F
+
+//I2C_SLV2_ADDR register masks
+#define MPU9250_I2C_SLV2_RNW_MASK       0x80
+#define MPU9250_I2C_ID_2_MASK           0x7F
+
+//I2C_SLV2_CTRL register masks
+#define MPU9250_I2C_SLV2_EN_MASK        0x80
+#define MPU9250_I2C_SLV2_BYTE_SW_MASK   0x40
+#define MPU9250_I2C_SLV2_REG_DIS_MASK   0x20
+#define MPU9250_I2C_SLV2_GRP_MASK       0x10
+#define MPU9250_I2C_SLV2_LENG_MASK      0x0F
+
+//I2C_SLV3_ADDR register masks
+#define MPU9250_I2C_SLV3_RNW_MASK       0x80
+#define MPU9250_I2C_ID_3_MASK           0x7F
+
+//I2C_SLV3_CTRL register masks
+#define MPU9250_I2C_SLV3_EN_MASK        0x80
+#define MPU9250_I2C_SLV3_BYTE_SW_MASK   0x40
+#define MPU9250_I2C_SLV3_REG_DIS_MASK   0x20
+#define MPU9250_I2C_SLV3_GRP_MASK       0x10
+#define MPU9250_I2C_SLV3_LENG_MASK      0x0F
+
+//I2C_SLV4_ADDR register masks
+#define MPU9250_I2C_SLV4_RNW_MASK       0x80
+#define MPU9250_I2C_ID_4_MASK           0x7F
+
+//I2C_SLV4_CTRL register masks
+#define MPU9250_I2C_SLV4_EN_MASK        0x80
+#define MPU9250_SLV4_DONE_INT_EN_MASK   0x40
+#define MPU9250_I2C_SLV4_REG_DIS_MASK   0x20
+#define MPU9250_I2C_MST_DLY_MASK        0x1F
+
+//I2C_MST_STATUS register masks
+#define MPU9250_PASS_THROUGH_MASK       0x80
+#define MPU9250_I2C_SLV4_DONE_MASK      0x40
+#define MPU9250_I2C_LOST_ARB_MASK       0x20
+#define MPU9250_I2C_SLV4_NACK_MASK      0x10
+#define MPU9250_I2C_SLV3_NACK_MASK      0x08
+#define MPU9250_I2C_SLV2_NACK_MASK      0x04
+#define MPU9250_I2C_SLV1_NACK_MASK      0x02
+#define MPU9250_I2C_SLV0_NACK_MASK      0x01
+
+//INT_PIN_CFG register masks
+#define MPU9250_ACTL_MASK               0x80
+#define MPU9250_OPEN_MASK               0x40
+#define MPU9250_LATCH_INT_EN_MASK       0x20
+#define MPU9250_INT_ANYRD_2CLEAR_MASK   0x10
+#define MPU9250_ACTL_FSYNC_MASK         0x08
+#define MPU9250_FSYNC_INT_MODE_EN_MASK  0x04
+#define MPU9250_BYPASS_EN_MASK          0x02
+
+//INT_ENABLE register masks
+#define MPU9250_WOM_EN_MASK             0x40
+#define MPU9250_FIFO_OFLOW_EN_MASK      0x10
+#define MPU9250_FSYNC_INT_EN_MASK       0x08
+#define MPU9250_RAW_RDY_EN_MASK         0x01
+
+//INT_STATUS register masks
+#define MPU9250_WOM_INT_MASK            0x40
+#define MPU9250_FIFO_OFLOW_INT_MASK     0x10
+#define MPU9250_FSYNC_INT_MASK          0x08
+#define MPU9250_RAW_DATA_RDY_INT_MASK   0x01
+
 //I2C_MST_DELAY_CTRL register masks
 #define MPU9250_DELAY_ES_SHADOW_MASK    0x80
 #define MPU9250_I2C_SLV4_DLY_EN_MASK    0x10
@@ -145,7 +272,7 @@
 #define MPU9250_ACCEL_RST_MASK          0x02
 #define MPU9250_TEMP_RST_MASK           0x01
 
-//ACCEL_INTEL_CTRL register masks
+//MOT_DETECT_CTRL register masks
 #define MPU9250_ACCEL_INTEL_EN_MASK     0x80
 #define MPU9250_ACCEL_INTEL_MODE_MASK   0x40
 
