@@ -3135,22 +3135,29 @@ void MPU9250::selectClock(uint8_t clock_type) {
 
 //Accelerometer functions
 uint8_t MPU9250::enableAccelerometerAxis(uint8_t axis) {
-    writeRegister(UNKNOWN_REGISTER, UNKNOWN_VALUE);
+    //arguments are : MPU9250_DISABLE_XA_MASK, MPU9250_DISABLE_YA_MASK, MPU9250_DISABLE_ZA_MASK
+    //WARNING: this should be verified here
+    writeRegister(MPU9250_PWR_MGMT_2, axis);
     return 1;
 }
 
 uint8_t MPU9250::disableAccelerometerAxis(uint8_t axis) {
-    writeRegister(UNKNOWN_REGISTER, UNKNOWN_VALUE);
+    //arguments are : MPU9250_DISABLE_XA_MASK, MPU9250_DISABLE_YA_MASK, MPU9250_DISABLE_ZA_MASK
+    //WARNING: this should be verified here
+    writeRegister(MPU9250_PWR_MGMT_2, axis);
     return 0;
 }
 
 bool MPU9250::enableAccelerometer(void) {
-    writeRegister(UNKNOWN_REGISTER, UNKNOWN_VALUE);
+    //WARNING: should read register value first and modify accordingly
+    //WARNING: wrong register value
+    writeRegister(MPU9250_PWR_MGMT_2, MPU9250_DISABLE_XYZA_MASK);
     return 1;
 }
 
 bool MPU9250::disableAccelerometer(void) {
-    writeRegister(UNKNOWN_REGISTER, UNKNOWN_VALUE);
+    //WARNING: should read register value first and modify accordingly
+    writeRegister(MPU9250_PWR_MGMT_2, MPU9250_DISABLE_XYZA_MASK);
     return 0;
 }
 
@@ -3169,22 +3176,30 @@ void MPU9250::getAcceleration(uint8_t ax, uint8_t ay, uint8_t az) {
 //Gyroscope functions
 
 uint8_t MPU9250::enableGyroAxis(uint8_t axis) {
-    writeRegister(UNKNOWN_REGISTER, UNKNOWN_VALUE);
+    //arguments are : MPU9250_DISABLE_XG_MASK, MPU9250_DISABLE_YG_MASK, MPU9250_DISABLE_ZG_MASK
+    //WARNING: this should be verified here
+
+    writeRegister(MPU9250_PWR_MGMT_2, axis);
     return 1;
 }
 
 uint8_t MPU9250::disableGyroAxis(uint8_t axis) {
-    writeRegister(UNKNOWN_REGISTER, UNKNOWN_VALUE);
+    //arguments are : MPU9250_DISABLE_XG_MASK, MPU9250_DISABLE_YG_MASK, MPU9250_DISABLE_ZG_MASK
+    //WARNING: this should be verified here
+    writeRegister(MPU9250_PWR_MGMT_2, axis);
     return 0;
 }
 
 bool MPU9250::enableGyro(void) {
-    writeRegister(UNKNOWN_REGISTER, UNKNOWN_VALUE);
+    //WARNING: should read register value first and modify accordingly
+    //WARNING: wrong register value
+    writeRegister(MPU9250_PWR_MGMT_2, MPU9250_DISABLE_XYZG_MASK);
     return 1;
 }
 
 bool MPU9250::disableGyro(void) {
-    writeRegister(UNKNOWN_REGISTER, UNKNOWN_VALUE);
+    //WARNING: should read register value first and modify accordingly
+    writeRegister(MPU9250_PWR_MGMT_2, MPU9250_DISABLE_XYZG_MASK);
     return 0;
 }
 
