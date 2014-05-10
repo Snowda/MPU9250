@@ -303,6 +303,39 @@
 #define MPU9250_DISABLE_XYZA_MASK       0x38
 #define MPU9250_DISABLE_XYZG_MASK       0x07
 
+//Magnetometer register maps
+#define MPU9250_MAG_WIA                 0x00
+#define MPU9250_MAG_INFO                0x01
+#define MPU9250_MAG_ST1                 0x02
+#define MPU9250_MAG_XOUT_L              0x03
+#define MPU9250_MAG_XOUT_H              0x04
+#define MPU9250_MAG_YOUT_L              0x05
+#define MPU9250_MAG_YOUT_H              0x06
+#define MPU9250_MAG_ZOUT_L              0x07
+#define MPU9250_MAG_ZOUT_H              0x08
+#define MPU9250_MAG_ST2                 0x09
+#define MPU9250_MAG_CNTL                0x0A
+#define MPU9250_MAG_RSV                 0x0B //reserved mystery meat
+#define MPU9250_MAG_ASTC                0x0C
+#define MPU9250_MAG_TS1                 0x0D
+#define MPU9250_MAG_TS2                 0x0E
+#define MPU9250_MAG_I2CDIS              0x0F
+#define MPU9250_MAG_ASAX                0x10
+#define MPU9250_MAG_ASAY                0x11
+#define MPU9250_MAG_ASAZ                0x12
+
+//Magnetometer register masks
+#define MPU9250_WIA_MASK 0x48
+#define MPU9250_ 0x
+#define MPU9250_ 0x
+#define MPU9250_ 0x
+#define MPU9250_ 0x
+#define MPU9250_ 0x
+#define MPU9250_ 0x
+#define MPU9250_ 0x
+#define MPU9250_ 0x
+#define MPU9250_ 0x
+ 
 class MPU9250 {
     public:
         MPU9250();
