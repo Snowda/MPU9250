@@ -37,6 +37,22 @@ bool MPU9250::writeRegister(const uint8_t register_addr, const uint8_t value) {
     return write_status; //returns whether the write succeeded or failed
 }
 
+bool MPU9250::writeRegisters(const uint8_t msb_register, const uint8_t msb_value, const uint8_t lsb_register, const uint8_t lsb_value) { 
+    //send write call to sensor address
+    //send register address to sensor
+    //send value to register
+    bool write status = 0;
+    return write_status; //returns whether the write succeeded or failed
+}
+
+bool MPU9250::writeMaskedRegister(const uint8_t register_addr, const uint8_t mask, const uint8_t value) {
+    bool write_status = 0;
+    masked_value = (mask & value); //there has to be an easier way to do this.... I know, I know, shut up, I know it's that, I'll get around to it when I can ok?
+    writeRegister(register_addr, masked_value)
+    return write_status;
+    //every reference to this is wrong (also)!! fix them!
+}
+
 uint8_t MPU9250::readRegister(const uint8_t register_addr) {
     //call sensor by address
     //call registers
@@ -56,14 +72,6 @@ uint8_t MPU9250::readMaskedRegister(const uint8_t register_addr, const uint8_t m
     return (data & mask);
 
     //every reference to this is wrong!!! fix them
-}
-
-bool MPU9250::writeMaskedRegister(const uint8_t register_addr, const uint8_t mask, const uint8_t value) {
-    bool write_status = 0;
-    masked_value = (mask & value); //there has to be an easier way to do this.... I know, I know, shut up, I know it's that, I'll get around to it when I can ok?
-    writeRegister(register_addr, masked_value)
-    return write_status;
-    //every reference to this is wrong (also)!! fix them!
 }
 
 /** Power on and prepare for general usage.
@@ -1881,209 +1889,6 @@ bool MPU9250::getIntDataReadyStatus(void) {
     return (response != 0);
 }
 
-// ACCEL_*OUT_* registers
-
-/** Get raw 9-axis motion sensor readings (accel/gyro/compass).
- * FUNCTION NOT FULLY IMPLEMENTED YET.
- */
-void MPU9250::getMotion9(int16_t* ax, int16_t* ay, int16_t* az, int16_t* gx, int16_t* gy, int16_t* gz, int16_t* mx, int16_t* my, int16_t* mz) {
-    uint8_t mag_addr, mx_low, mx_high, my_low, my_high, mz_low, mz_high;
-
-	//get accel and gyro
-	getMotion6(ax, ay, az, gx, gy, gz);
-	
-	//read magnetometer
-	writeRegister(MPU9250_RA_INT_PIN_CFG, 0x02); //set i2c bypass enable pin to true to access magnetometer
-	writeRegister(MPU9250_MAG_ADDRESS, 0x0A, 0x01); //enable the magnetometer
-    mag_addr = readRegister(MPU9250_MAG_ADDRESS); //check what this static variable is/does
-    
-    mx_low = readRegister(MPU9250_MAG_XOUT_L)
-    mx_high = readRegister(MPU9250_MAG_XOUT_H)
-    my_low = readRegister(MPU9250_MAG_YOUT_L)
-    my_high = readRegister(MPU9250_MAG_YOUT_H)
-    mz_low = readRegister(MPU9250_MAG_ZOUT_L)
-    mz_high = readRegister(MPU9250_MAG_ZOUT_H)
-
-	*mx = (((int16_t)mx_high) << 8) | mx_low;
-    *my = (((int16_t)my_high) << 8) | my_low;
-    *mz = (((int16_t)mz_high) << 8) | mz_low;		
-}
-
-void MPU9250::getMotion6(int16_t* ax, int16_t* ay, int16_t* az, int16_t* gx, int16_t* gy, int16_t* gz) {
-    uint8_t ax_high, ax_low, ay_high, ay_low, az_high, ay_low;
-    uint8_t gx_high, gx_low, gy_high, gy_low, gz_high, gz_low;
-
-    ax_high = readRegister(MPU9250_ACCEL_XOUT_H);
-    ax_low = readRegister(MPU9250_ACCEL_XOUT_L);
-    ay_high = readRegister(MPU9250_ACCEL_YOUT_H);
-    ay_low = readRegister(MPU9250_ACCEL_YOUT_L);
-    az_high = readRegister(MPU9250_ACCEL_ZOUT_H);
-    az_low = readRegister(MPU9250_ACCEL_ZOUT_L);
-
-    *ax = (((int16_t)ax_high) << 8) | ax_low;
-    *ay = (((int16_t)ay_high) << 8) | ay_low;
-    *az = (((int16_t)az_high) << 8) | az_low;
-
-    gx_high = readRegister(MPU9250_GYRO_XOUT_H);
-    gx_low = readRegister(MPU9250_GYRO_XOUT_L);
-    gy_high = readRegister(MPU9250_GYRO_YOUT_H);
-    gy_low = readRegister(MPU9250_GYRO_YOUT_L);
-    gz_high = readRegister(MPU9250_GYRO_ZOUT_H);
-    gz_low = readRegister(MPU9250_GYRO_ZOUT_L);
-
-    *gx = (((int16_t)gx_high) << 8) | gx_low;
-    *gy = (((int16_t)gy_high) << 8) | gy_low;
-    *gz = (((int16_t)gz_high) << 8) | gz_low;
-}
-/** Get 3-axis accelerometer readings.
- * These registers store the most recent accelerometer measurements.
- * Accelerometer measurements are written to these registers at the Sample Rate
- * as defined in Register 25.
- *
- * The accelerometer measurement registers, along with the temperature
- * measurement registers, gyroscope measurement registers, and external sensor
- * data registers, are composed of two sets of registers: an internal register
- * set and a user-facing read register set.
- *
- * The data within the accelerometer sensors' internal register set is always
- * updated at the Sample Rate. Meanwhile, the user-facing read register set
- * duplicates the internal register set's data values whenever the serial
- * interface is idle. This guarantees that a burst read of sensor registers will
- * read measurements from the same sampling instant. Note that if burst reads
- * are not used, the user is responsible for ensuring a set of single byte reads
- * correspond to a single sampling instant by checking the Data Ready interrupt.
- *
- * Each 16-bit accelerometer measurement has a full scale defined in ACCEL_FS
- * (Register 28). For each full scale setting, the accelerometers' sensitivity
- * per LSB in ACCEL_xOUT is shown in the table below:
- *
- * <pre>
- * AFS_SEL | Full Scale Range | LSB Sensitivity
- * --------+------------------+----------------
- * 0       | +/- 2g           | 8192 LSB/mg
- * 1       | +/- 4g           | 4096 LSB/mg
- * 2       | +/- 8g           | 2048 LSB/mg
- * 3       | +/- 16g          | 1024 LSB/mg
- * </pre>
- *
- * @param x 16-bit signed integer container for X-axis acceleration
- * @param y 16-bit signed integer container for Y-axis acceleration
- * @param z 16-bit signed integer container for Z-axis acceleration
- * @see MPU9250_RA_GYRO_XOUT_H
- */
-void MPU9250::getAcceleration(int16_t* x, int16_t* y, int16_t* z) {
-    uint8_t bit0 = readRegister(MPU9250_ACCEL_XOUT_H);
-    uint8_t bit1 = readRegister(MPU9250_ACCEL_XOUT_L);
-    uint8_t bit2 = readRegister(MPU9250_ACCEL_YOUT_H);
-    uint8_t bit3 = readRegister(MPU9250_ACCEL_YOUT_L);
-    uint8_t bit4 = readRegister(MPU9250_ACCEL_ZOUT_H);
-    uint8_t bit5 = readRegister(MPU9250_ACCEL_ZOUT_H);
-    *x = (((int16_t)bit0) << 8) | bit1;
-    *y = (((int16_t)bit2) << 8) | bit3;
-    *z = (((int16_t)bit4) << 8) | bit5;
-}
-
-/** Get X-axis accelerometer reading.
- * @return X-axis acceleration measurement in 16-bit 2's complement format
- * @see getMotion6()
- * @see MPU9250_RA_ACCEL_XOUT_H
- */
-int16_t MPU9250::getAccelerationX(void) {
-    return readRegisters(MPU9250_RA_ACCEL_XOUT_H, UNKNOWN_REGISTER);
-}
-
-/** Get Y-axis accelerometer reading.
- * @return Y-axis acceleration measurement in 16-bit 2's complement format
- * @see getMotion6()
- * @see MPU9250_RA_ACCEL_YOUT_H
- */
-int16_t MPU9250::getAccelerationY(void) {
-    return readRegisters(MPU9250_RA_ACCEL_YOUT_H, UNKNOWN_REGISTER);
-}
-
-/** Get Z-axis accelerometer reading.
- * @return Z-axis acceleration measurement in 16-bit 2's complement format
- * @see getMotion6()
- * @see MPU9250_RA_ACCEL_ZOUT_H
- */
-int16_t MPU9250::getAccelerationZ(void) {
-    return readRegisters(MPU9250_RA_ACCEL_ZOUT_H, UNKNOWN_REGISTER);
-}
-
-// GYRO_*OUT_* registers
-
-/** Get 3-axis gyroscope readings.
- * These gyroscope measurement registers, along with the accelerometer
- * measurement registers, temperature measurement registers, and external sensor
- * data registers, are composed of two sets of registers: an internal register
- * set and a user-facing read register set.
- * The data within the gyroscope sensors' internal register set is always
- * updated at the Sample Rate. Meanwhile, the user-facing read register set
- * duplicates the internal register set's data values whenever the serial
- * interface is idle. This guarantees that a burst read of sensor registers will
- * read measurements from the same sampling instant. Note that if burst reads
- * are not used, the user is responsible for ensuring a set of single byte reads
- * correspond to a single sampling instant by checking the Data Ready interrupt.
- *
- * Each 16-bit gyroscope measurement has a full scale defined in FS_SEL
- * (Register 27). For each full scale setting, the gyroscopes' sensitivity per
- * LSB in GYRO_xOUT is shown in the table below:
- *
- * <pre>
- * FS_SEL | Full Scale Range   | LSB Sensitivity
- * -------+--------------------+----------------
- * 0      | +/- 250 degrees/s  | 131 LSB/deg/s
- * 1      | +/- 500 degrees/s  | 65.5 LSB/deg/s
- * 2      | +/- 1000 degrees/s | 32.8 LSB/deg/s
- * 3      | +/- 2000 degrees/s | 16.4 LSB/deg/s
- * </pre>
- *
- * @param x 16-bit signed integer container for X-axis rotation
- * @param y 16-bit signed integer container for Y-axis rotation
- * @param z 16-bit signed integer container for Z-axis rotation
- * @see getMotion6()
- * @see MPU9250_RA_GYRO_XOUT_H
- */
-void MPU9250::getRotation(int16_t* x, int16_t* y, int16_t* z) {
-    uint8_t bit0 = readRegister(MPU9250_GYRO_XOUT_H); //add read commands which handle the number of subsequent registers listed here: //, 6, buffer);
-    uint8_t bit1 = readRegister(MPU9250_GYRO_XOUT_L);
-    uint8_t bit2 = readRegister(MPU9250_GYRO_YOUT_H);
-    uint8_t bit3 = readRegister(MPU9250_GYRO_YOUT_L);
-    uint8_t bit4 = readRegister(MPU9250_GYRO_ZOUT_H);
-    uint8_t bit5 = readRegister(MPU9250_GYRO_ZOUT_L);
-
-    *x = (((int16_t)bit0) << 8) | bit1;
-    *y = (((int16_t)bit2) << 8) | bit3;
-    *z = (((int16_t)bit4) << 8) | bit5;
-}
-
-/** Get X-axis gyroscope reading.
- * @return X-axis rotation measurement in 16-bit 2's complement format
- * @see getMotion6()
- * @see MPU9250_RA_GYRO_XOUT_H
- */
-int16_t MPU9250::getRotationX(void) {
-    return readRegisters(MPU9250_RA_GYRO_XOUT_H, UNKNOWN_REGISTER);
-}
-
-/** Get Y-axis gyroscope reading.
- * @return Y-axis rotation measurement in 16-bit 2's complement format
- * @see getMotion6()
- * @see MPU9250_RA_GYRO_YOUT_H
- */
-int16_t MPU9250::getRotationY(void) {
-    return readRegisters(MPU9250_RA_GYRO_YOUT_H, UNKNOWN_REGISTER);
-}
-
-/** Get Z-axis gyroscope reading.
- * @return Z-axis rotation measurement in 16-bit 2's complement format
- * @see getMotion6()
- * @see MPU9250_RA_GYRO_ZOUT_H
- */
-int16_t MPU9250::getRotationZ(void) {
-    return readRegisters(MPU9250_RA_GYRO_ZOUT_H, UNKNOWN_REGISTER);
-}
-
 // EXT_SENS_DATA_* registers
 
 /** Read single byte from external sensor data register.
@@ -2633,37 +2438,6 @@ bool MPU9250::getWakeCycleEnabled(void) {
 bool MPU9250::setWakeCycleEnabled(const bool enabled) {
     // Set X-axis accelerometer standby enabled status.
     return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_PWR_MGMT_1, MPU9250_PWR1_CYCLE_BIT, enabled);
-}
-
-/** Get temperature sensor enabled status.
- * Control the usage of the internal temperature sensor.
- *
- * Note: this register stores the *disabled* value, but for consistency with the
- * rest of the code, the function is named and used with standard true/false
- * values to indicate whether the sensor is enabled or disabled, respectively.
- *
- * @return Current temperature sensor enabled status
- * @see MPU9250_RA_PWR_MGMT_1
- * @see MPU9250_PWR1_TEMP_DIS_BIT
- */
-bool MPU9250::getTempSensorEnabled(void) {
-    readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_PWR_MGMT_1, MPU9250_PWR1_TEMP_DIS_BIT, buffer);
-    return buffer[0] == 0; // 1 is actually disabled here
-}
-
-/** Set temperature sensor enabled status.
- * Note: this register stores the *disabled* value, but for consistency with the
- * rest of the code, the function is named and used with standard true/false
- * values to indicate whether the sensor is enabled or disabled, respectively.
- *
- * @param enabled New temperature sensor enabled status
- * @see getTempSensorEnabled()
- * @see MPU9250_RA_PWR_MGMT_1
- * @see MPU9250_PWR1_TEMP_DIS_BIT
- */
-bool MPU9250::setTempSensorEnabled(const bool enabled) {
-    // 1 is actually disabled here
-    return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_PWR_MGMT_1, MPU9250_PWR1_TEMP_DIS_BIT, !enabled);
 }
 
 /** Get clock source setting.
@@ -3392,11 +3166,6 @@ bool MPU9250::setDMPConfig2(uint8_t config) {
 
 
 
-
-void MPU9250::initialize() {
-
-}
-
 uint8_t MPU9250::getDeviceID(void) {
     _whoami = readRegister(MPU9250_WHO_AM_I);
     return _whoami;
@@ -3408,10 +3177,6 @@ uint8_t MPU9250::getDeviceID(void) {
  */
 bool MPU9250::testConnection(void) {
     return getDeviceID() == WHOAMI_DEFAULT_VAL;
-}
-
-void MPU9250::getMotion9(uint8_t ax, uint8_t ay, uint8_t az, uint8_t gx, uint8_t gy, uint8_t gz, uint8_t mx, uint8_t my, uint8_t mz) {
-
 }
 
 void MPU9250::selectClock(uint8_t clock_type) {
@@ -3466,7 +3231,13 @@ bool MPU9250::accelerometerZIsEnabled(void) {
     return (status != 0);
 }
 
-int16_t MPU9250::getXAcceleration(void) {
+
+/** Get X-axis accelerometer reading.
+ * @return X-axis acceleration measurement in 16-bit 2's complement format
+ * @see getMotion6()
+ * @see MPU9250_RA_ACCEL_XOUT_H
+ */
+int16_t MPU9250::getAccelerationX(void) {
     if(accelerometerXIsEnabled()){
         return (int16_t) readRegisters(MPU9250_ACCEL_XOUT_H, MPU9250_ACCEL_XOUT_L);
     } else {
@@ -3474,7 +3245,12 @@ int16_t MPU9250::getXAcceleration(void) {
     }
 }
 
-int16_t MPU9250::getYAcceleration(void) {
+/** Get Y-axis accelerometer reading.
+ * @return Y-axis acceleration measurement in 16-bit 2's complement format
+ * @see getMotion6()
+ * @see MPU9250_RA_ACCEL_YOUT_H
+ */
+int16_t MPU9250::getAccelerationY(void) {
     if(accelerometerYIsEnabled()){
         return (int16_t) readRegisters(MPU9250_ACCEL_YOUT_H, MPU9250_ACCEL_YOUT_L);
     } else {
@@ -3482,7 +3258,12 @@ int16_t MPU9250::getYAcceleration(void) {
     }
 }
 
-int16_t MPU9250::getZAcceleration(void) {
+/** Get Z-axis accelerometer reading.
+ * @return Z-axis acceleration measurement in 16-bit 2's complement format
+ * @see getMotion6()
+ * @see MPU9250_RA_ACCEL_ZOUT_H
+ */
+int16_t MPU9250::getAccelerationZ(void) {
     if(accelerometerZIsEnabled()){
         return (int16_t) readRegisters(MPU9250_ACCEL_ZOUT_H, MPU9250_ACCEL_ZOUT_L);
     } else {
@@ -3490,10 +3271,46 @@ int16_t MPU9250::getZAcceleration(void) {
     }
 }
 
-void MPU9250::getAcceleration(uint16_t ax, uint16_t ay, uint16_t az) {
-        ax = getXAcceleration(); 
-        ay = getYAcceleration(); 
-        az = getZAcceleration();
+/** Get 3-axis accelerometer readings.
+ * These registers store the most recent accelerometer measurements.
+ * Accelerometer measurements are written to these registers at the Sample Rate
+ * as defined in Register 25.
+ *
+ * The accelerometer measurement registers, along with the temperature
+ * measurement registers, gyroscope measurement registers, and external sensor
+ * data registers, are composed of two sets of registers: an internal register
+ * set and a user-facing read register set.
+ *
+ * The data within the accelerometer sensors' internal register set is always
+ * updated at the Sample Rate. Meanwhile, the user-facing read register set
+ * duplicates the internal register set's data values whenever the serial
+ * interface is idle. This guarantees that a burst read of sensor registers will
+ * read measurements from the same sampling instant. Note that if burst reads
+ * are not used, the user is responsible for ensuring a set of single byte reads
+ * correspond to a single sampling instant by checking the Data Ready interrupt.
+ *
+ * Each 16-bit accelerometer measurement has a full scale defined in ACCEL_FS
+ * (Register 28). For each full scale setting, the accelerometers' sensitivity
+ * per LSB in ACCEL_xOUT is shown in the table below:
+ *
+ * <pre>
+ * AFS_SEL | Full Scale Range | LSB Sensitivity
+ * --------+------------------+----------------
+ * 0       | +/- 2g           | 8192 LSB/mg
+ * 1       | +/- 4g           | 4096 LSB/mg
+ * 2       | +/- 8g           | 2048 LSB/mg
+ * 3       | +/- 16g          | 1024 LSB/mg
+ * </pre>
+ *
+ * @param x 16-bit signed integer container for X-axis acceleration
+ * @param y 16-bit signed integer container for Y-axis acceleration
+ * @param z 16-bit signed integer container for Z-axis acceleration
+ * @see MPU9250_RA_GYRO_XOUT_H
+ */
+void MPU9250::getAcceleration(int16_t* ax, int16_t* ay, int16_t* az) {
+    *ax = getAccelerationX();
+    *ay = getAccelerationY();
+    *az = getAccelerationZ();
 }
 
 //Gyroscope functions
@@ -3546,7 +3363,12 @@ bool MPU9250::gyroZIsEnabled(void) {
     return (status != 0);
 }
 
-int16_t MPU9250::getXRotation(void) {
+/** Get X-axis gyroscope reading.
+ * @return X-axis rotation measurement in 16-bit 2's complement format
+ * @see getMotion6()
+ * @see MPU9250_RA_GYRO_XOUT_H
+ */
+int16_t MPU9250::getRotationX(void) {
     if(gyroXIsEnabled()){
         return (int16_t) readRegisters(MPU9250_GYRO_XOUT_H, MPU9250_GYRO_XOUT_L); 
     } else {
@@ -3554,7 +3376,12 @@ int16_t MPU9250::getXRotation(void) {
     }
 }
 
-int16_t MPU9250::getYRotation(void) {
+/** Get Y-axis gyroscope reading.
+ * @return Y-axis rotation measurement in 16-bit 2's complement format
+ * @see getMotion6()
+ * @see MPU9250_RA_GYRO_YOUT_H
+ */
+int16_t MPU9250::getRotationY(void) {
     if(gyroYIsEnabled()){
         return (int16_t) readRegisters(MPU9250_GYRO_YOUT_H, MPU9250_GYRO_YOUT_L); 
     } else {
@@ -3562,7 +3389,12 @@ int16_t MPU9250::getYRotation(void) {
     }
 }
 
-int16_t MPU9250::getZRotation(void) {
+/** Get Z-axis gyroscope reading.
+ * @return Z-axis rotation measurement in 16-bit 2's complement format
+ * @see getMotion6()
+ * @see MPU9250_RA_GYRO_ZOUT_H
+ */
+int16_t MPU9250::getRotationZ(void) {
     if(gyroZIsEnabled()){
         return (int16_t) readRegisters(MPU9250_GYRO_ZOUT_H, MPU9250_GYRO_ZOUT_L); 
     } else {
@@ -3570,13 +3402,82 @@ int16_t MPU9250::getZRotation(void) {
     }
 }
 
-void MPU9250::getRotation(uint16_t gx, uint16_t gy, uint16_t gz) {
-        gx = getXRotation(); 
-        gy = getYRotation(); 
-        gz = getZRotation();
+// GYRO_*OUT_* registers
+
+/** Get 3-axis gyroscope readings.
+ * These gyroscope measurement registers, along with the accelerometer
+ * measurement registers, temperature measurement registers, and external sensor
+ * data registers, are composed of two sets of registers: an internal register
+ * set and a user-facing read register set.
+ * The data within the gyroscope sensors' internal register set is always
+ * updated at the Sample Rate. Meanwhile, the user-facing read register set
+ * duplicates the internal register set's data values whenever the serial
+ * interface is idle. This guarantees that a burst read of sensor registers will
+ * read measurements from the same sampling instant. Note that if burst reads
+ * are not used, the user is responsible for ensuring a set of single byte reads
+ * correspond to a single sampling instant by checking the Data Ready interrupt.
+ *
+ * Each 16-bit gyroscope measurement has a full scale defined in FS_SEL
+ * (Register 27). For each full scale setting, the gyroscopes' sensitivity per
+ * LSB in GYRO_xOUT is shown in the table below:
+ *
+ * <pre>
+ * FS_SEL | Full Scale Range   | LSB Sensitivity
+ * -------+--------------------+----------------
+ * 0      | +/- 250 degrees/s  | 131 LSB/deg/s
+ * 1      | +/- 500 degrees/s  | 65.5 LSB/deg/s
+ * 2      | +/- 1000 degrees/s | 32.8 LSB/deg/s
+ * 3      | +/- 2000 degrees/s | 16.4 LSB/deg/s
+ * </pre>
+ *
+ * @param x 16-bit signed integer container for X-axis rotation
+ * @param y 16-bit signed integer container for Y-axis rotation
+ * @param z 16-bit signed integer container for Z-axis rotation
+ * @see getMotion6()
+ * @see MPU9250_RA_GYRO_XOUT_H
+ */
+
+void MPU9250::getRotation(int16_t* gx, int16_t* gy, int16_t* gz) {
+    *gx = getRotationX();
+    *gy = getRotationY();
+    *gz = getRotationZ();
+}
+
+void MPU9250::getMotion6(int16_t* ax, int16_t* ay, int16_t* az, int16_t* gx, int16_t* gy, int16_t* gz) {
+    getAcceleration(ax, ay, az);
+    getRotation(gx, gy, gz)
+}
+
+// ACCEL_*OUT_* registers
+
+/** Get raw 9-axis motion sensor readings (accel/gyro/compass).
+ * FUNCTION NOT FULLY IMPLEMENTED YET.
+ */
+void MPU9250::getMotion9(int16_t* ax, int16_t* ay, int16_t* az, int16_t* gx, int16_t* gy, int16_t* gz, int16_t* mx, int16_t* my, int16_t* mz) {
+    uint8_t mag_addr, mx_low, mx_high, my_low, my_high, mz_low, mz_high;
+
+    //get accel and gyro
+    getMotion6(ax, ay, az, gx, gy, gz);
+    
+    //read magnetometer
+    writeRegister(MPU9250_RA_INT_PIN_CFG, 0x02); //set i2c bypass enable pin to true to access magnetometer
+    writeRegister(MPU9250_MAG_ADDRESS, 0x0A, 0x01); //enable the magnetometer
+    mag_addr = readRegister(MPU9250_MAG_ADDRESS); //check what this static variable is/does
+    
+    mx_low = readRegister(MPU9250_MAG_XOUT_L)
+    mx_high = readRegister(MPU9250_MAG_XOUT_H)
+    my_low = readRegister(MPU9250_MAG_YOUT_L)
+    my_high = readRegister(MPU9250_MAG_YOUT_H)
+    mz_low = readRegister(MPU9250_MAG_ZOUT_L)
+    mz_high = readRegister(MPU9250_MAG_ZOUT_H)
+
+    *mx = (((int16_t)mx_high) << 8) | mx_low;
+    *my = (((int16_t)my_high) << 8) | my_low;
+    *mz = (((int16_t)mz_high) << 8) | mz_low;       
 }
 
 //Temperature functions
+
 bool MPU9250::enableTemperature(void) {
     return writeRegister(UNKNOWN_REGISTER, UNKNOWN_VALUE);
 }

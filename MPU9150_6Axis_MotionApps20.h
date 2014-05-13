@@ -44,7 +44,7 @@ THE SOFTWARE.
 
 /* Source is from the InvenSense MotionApps v2 demo code. Original source is
  * unavailable, unless you happen to be amazing as decompiling binary by
- * hand (in which case, please contact me, and I'm totally serious).
+ * hand
  *
  * Also, I'd like to offer many, many thanks to Noah Zerkin for all of the
  * DMP reverse-engineering he did to help make this bit of wizardry
