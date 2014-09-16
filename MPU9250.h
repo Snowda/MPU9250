@@ -339,11 +339,10 @@
 class MPU9250 {
     public:
         MPU9250();
-        MPU9150(uint8_t address);
+        bool MPU9150(uint8_t address);
 
         void initialize();
 
-        uint8_t getAuxVDDIOLevel(void);
         uint8_t getAuxVDDIOLevel(void);
         bool setAuxVDDIOLevel(const uint8_t level);
         uint8_t getRate(void);
@@ -538,7 +537,7 @@ class MPU9250 {
         bool setDMPConfig2(uint8_t config);
 
         uint8_t getDeviceID(void);
-        void testConnection();
+        bool testConnection();
         void selectClock(uint8_t clock_type);
 
         //acceleration functions
@@ -660,9 +659,9 @@ class MPU9250 {
         uint16_t readRegisters(const uint8_t msb_register, const uint8_t lsb_register);
         uint8_t readMaskedRegister(const uint8_t register_addr, const uint8_t mask);
 
-        _address;
-        _whoami;
-        _temperature;
+        uint8_t _address;
+        uint8_t _whoami;
+        int16_t _temperature;
 };
 
 #endif /* _MPU9250_H_ */

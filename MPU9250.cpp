@@ -25,8 +25,9 @@ MPU9250::MPU9250() {
  * @see MPU9250_ADDRESS_AD0_LOW
  * @see MPU9250_ADDRESS_AD0_HIGH
  */
-MPU9250::MPU9250(uint8_t address) {
+bool MPU9250::MPU9250(uint8_t address) {
     _address = address;
+    return false
 }
 
 bool MPU9250::writeRegister(const uint8_t register_addr, const uint8_t value) {
@@ -2710,7 +2711,6 @@ bool MPU9250::setFIFOByte(const uint8_t data) {
 // ======== UNDOCUMENTED/DMP REGISTERS/METHODS ========
 
 // XG_OFFS_TC register
-
 uint8_t MPU9250::getOTPBankValid(void) {
     return readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_XG_OFFS_TC, MPU9250_TC_OTP_BNK_VLD_BIT, buffer);
 }
@@ -2728,7 +2728,6 @@ bool MPU9250::setXGyroOffset(const int8_t offset) {
 }
 
 // YG_OFFS_TC register
-
 int8_t MPU9250::getYGyroOffset(void) {
     return readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_YG_OFFS_TC, MPU9250_TC_OFFSET_BIT, MPU9250_TC_OFFSET_LENGTH, buffer);
 }
@@ -2738,7 +2737,6 @@ bool MPU9250::setYGyroOffset(const int8_t offset) {
 }
 
 // ZG_OFFS_TC register
-
 int8_t MPU9250::getZGyroOffset(void) {
     return readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_ZG_OFFS_TC, MPU9250_TC_OFFSET_BIT, MPU9250_TC_OFFSET_LENGTH, buffer);
 }
@@ -2748,7 +2746,6 @@ bool MPU9250::setZGyroOffset(const int8_t offset) {
 }
 
 // X_FINE_GAIN register
-
 int8_t MPU9250::getXFineGain(void) {
     return readRegister(MPU9250_RA_X_FINE_GAIN);
 }
@@ -2758,7 +2755,6 @@ bool MPU9250::setXFineGain(const int8_t gain) {
 }
 
 // Y_FINE_GAIN register
-
 int8_t MPU9250::getYFineGain(void) {
     return readRegister(MPU9250_RA_Y_FINE_GAIN);
 }
@@ -2768,7 +2764,6 @@ bool MPU9250::setYFineGain(const int8_t gain) {
 }
 
 // Z_FINE_GAIN register
-
 int8_t MPU9250::getZFineGain(void) {
     return readRegister(MPU9250_RA_Z_FINE_GAIN);
 }
@@ -2778,7 +2773,6 @@ bool MPU9250::setZFineGain(const int8_t gain) {
 }
 
 // XA_OFFS_* registers
-
 int16_t MPU9250::getXAccelOffset(void) {
     return readRegisters(MPU9250_RA_XA_OFFS_H, UNKNOWN_REGISTER);
 }
@@ -2788,7 +2782,6 @@ void MPU9250::setXAccelOffset(const int16_t offset) {
 }
 
 // YA_OFFS_* register
-
 int16_t MPU9250::getYAccelOffset(void) {
     return readRegisters(MPU9250_RA_YA_OFFS_H, UNKNOWN_REGISTER);
 }
@@ -2798,7 +2791,6 @@ void MPU9250::setYAccelOffset(const int16_t offset) {
 }
 
 // ZA_OFFS_* register
-
 int16_t MPU9250::getZAccelOffset(void) {
     return readRegisters(MPU9250_RA_ZA_OFFS_H, UNKNOWN_REGISTER);
 }
@@ -2808,7 +2800,6 @@ void MPU9250::setZAccelOffset(const int16_t offset) {
 }
 
 // XG_OFFS_USR* registers
-
 int16_t MPU9250::getXGyroOffsetUser(void) {
     return readRegisters(MPU9250_RA_XG_OFFS_USRH, UNKNOWN_REGISTER);
 }
@@ -2818,7 +2809,6 @@ void MPU9250::setXGyroOffsetUser(const int16_t offset) {
 }
 
 // YG_OFFS_USR* register
-
 int16_t MPU9250::getYGyroOffsetUser(void) {
     return readRegisters(MPU9250_RA_YG_OFFS_USRH, UNKNOWN_REGSITER);
 }
@@ -2828,7 +2818,6 @@ void MPU9250::setYGyroOffsetUser(const int16_t offset) {
 }
 
 // ZG_OFFS_USR* register
-
 int16_t MPU9250::getZGyroOffsetUser(void) {
     return readRegisters(MPU9250_RA_ZG_OFFS_USRH, UNKNOWN_REGISTER);
 }
@@ -2839,7 +2828,6 @@ void MPU9250::setZGyroOffsetUser(const int16_t offset) {
 }
 
 // INT_ENABLE register (DMP functions)
-
 bool MPU9250::getIntPLLReadyEnabled(void) {
     uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_PLL_RDY_INT_BIT, buffer);
     return (response != 0);
@@ -2859,7 +2847,6 @@ bool MPU9250::setIntDMPEnabled(const bool enabled) {
 }
 
 // DMP_INT_STATUS
-
 bool MPU9250::getDMPInt5Status(void) {
     uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_DMP_INT_STATUS, MPU9250_DMPINT_5_BIT, buffer);
     return (response != 0);
@@ -2891,7 +2878,6 @@ bool MPU9250::getDMPInt0Status(void) {
 }
 
 // INT_STATUS register (DMP functions)
-
 bool MPU9250::getIntPLLReadyStatus(void) {
     uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_STATUS, MPU9250_INTERRUPT_PLL_RDY_INT_BIT, buffer);
     return (response != 0);
@@ -2903,7 +2889,6 @@ bool MPU9250::getIntDMPStatus(void) {
 }
 
 // USER_CTRL register (DMP functions)
-
 bool MPU9250::getDMPEnabled(void) {
     uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_USER_CTRL, MPU9250_USERCTRL_DMP_EN_BIT, buffer);
     return (response != 0);
@@ -2918,7 +2903,6 @@ bool MPU9250::resetDMP(void) {
 }
 
 // BANK_SEL register
-
 bool MPU9250::setMemoryBank(uint8_t bank, const bool prefetchEnabled, const bool userBank) {
     bank &= 0x1F;
 
@@ -2934,13 +2918,11 @@ bool MPU9250::setMemoryBank(uint8_t bank, const bool prefetchEnabled, const bool
 }
 
 // MEM_START_ADDR register
-
 bool MPU9250::setMemoryStartAddress(const uint8_t address) {
     return writeRegister(MPU9250_RA_MEM_START_ADDR, address);
 }
 
 // MEM_R_W register
-
 uint8_t MPU9250::readMemoryByte(void) {
     return readRegister(MPU9250_RA_MEM_R_W);
 }
@@ -3161,10 +3143,6 @@ uint8_t MPU9250::getDMPConfig2(void) {
 bool MPU9250::setDMPConfig2(uint8_t config) {
     return writeRegister(MPU9250_RA_DMP_CFG_2, config);
 }
-
-
-
-
 
 uint8_t MPU9250::getDeviceID(void) {
     _whoami = readRegister(MPU9250_WHO_AM_I);
