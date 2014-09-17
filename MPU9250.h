@@ -326,15 +326,6 @@
 
 //Magnetometer register masks
 #define MPU9250_WIA_MASK 0x48
-#define MPU9250_ 0x
-#define MPU9250_ 0x
-#define MPU9250_ 0x
-#define MPU9250_ 0x
-#define MPU9250_ 0x
-#define MPU9250_ 0x
-#define MPU9250_ 0x
-#define MPU9250_ 0x
-#define MPU9250_ 0x
  
 class MPU9250 {
     public:
@@ -542,11 +533,11 @@ class MPU9250 {
 
         //acceleration functions
         bool getAccelXSelfTest(void);
-        bool setAccelXSelfTest(const bool enabled);
+        bool setAccelXSelfTest(const uint8_t enabled);
         bool getAccelYSelfTest(void);
-        bool setAccelYSelfTest(const bool enabled);
+        bool setAccelYSelfTest(const uint8_t enabled);
         bool getAccelZSelfTest(void);
-        bool setAccelZSelfTest(const bool enabled);
+        bool setAccelZSelfTest(const uint8_t enabled);
         uint8_t getFullScaleAccelRange(void);
         bool setFullScaleAccelRange(const uint8_t range);
 
@@ -635,7 +626,6 @@ class MPU9250 {
         bool gyroYIsEnabled(void);
         bool gyroZIsEnabled(void);
 
-
         void getMotion6(int16_t* ax, int16_t* ay, int16_t* az, int16_t* gx, int16_t* gy, int16_t* gz);
         void getMotion9(int16_t* ax, int16_t* ay, int16_t* az, int16_t* gx, int16_t* gy, int16_t* gz, int16_t* mx, int16_t* my, int16_t* mz);
         
@@ -648,7 +638,6 @@ class MPU9250 {
         bool temperatureIsEnabled(void);
         int16_t getTemperature(void);
         bool resetTemperaturePath(void);
-
 
     private:
         bool writeRegister(const uint8_t register_addr, const uint8_t value);

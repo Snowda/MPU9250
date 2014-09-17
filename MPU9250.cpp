@@ -34,30 +34,30 @@ bool MPU9250::writeRegister(const uint8_t register_addr, const uint8_t value) {
     //send write call to sensor address
     //send register address to sensor
     //send value to register
-    bool write status = 0;
-    return write_status; //returns whether the write succeeded or failed
+    //bool write status = 0;
+    return 0; //returns whether the write succeeded or failed
 }
 
 bool MPU9250::writeRegisters(const uint8_t msb_register, const uint8_t msb_value, const uint8_t lsb_register, const uint8_t lsb_value) { 
     //send write call to sensor address
     //send register address to sensor
     //send value to register
-    bool write status = 0;
-    return write_status; //returns whether the write succeeded or failed
+    bool msb_bool, lsb_bool;
+    msb_bool = writeRegister(msb_register, msb_value);
+    lsb_bool = writeRegister(lsb_register, lsb_value);
+    return 0; //returns whether the write succeeded or failed
 }
 
 bool MPU9250::writeMaskedRegister(const uint8_t register_addr, const uint8_t mask, const uint8_t value) {
-    bool write_status = 0;
-    masked_value = (mask & value); //there has to be an easier way to do this.... I know, I know, shut up, I know it's that, I'll get around to it when I can ok?
-    writeRegister(register_addr, masked_value)
-    return write_status;
+    uint8_t masked_value = (mask & value); //there has to be an easier way to do this.... I know, I know, shut up, I know it's that, I'll get around to it when I can ok?
+    return writeRegister(register_addr, masked_value);
     //every reference to this is wrong (also)!! fix them!
 }
 
 uint8_t MPU9250::readRegister(const uint8_t register_addr) {
     //call sensor by address
     //call registers
-    uint8_t data =0;
+    uint8_t data = 0;
     return data; //return the data returned from the register
 }
 
@@ -270,53 +270,53 @@ bool MPU9250::setFullScaleGyroRange(const uint8_t range) {
 
 /** Get self-test enabled setting for accelerometer X axis.
  * @return Self-test enabled value
- * @see MPU9250_RA_ACCEL_CONFIG
+ * @see MPU9250_SELF_TEST_X_ACCEL
  */
 bool MPU9250::getAccelXSelfTest(void) {
-    uint8_t test_result = readMaskedRegister(MPU9250_ACCEL_CONFIG, uint8_t mask); //MPU9250_ACONFIG_XA_ST_BIT, buffer); //check if ACCEL CONFIG2 is relevant
+    uint8_t test_result = readRegister(MPU9250_SELF_TEST_X_ACCEL); //MPU9250_ACONFIG_XA_ST_BIT, buffer); //check if ACCEL CONFIG2 is relevant
     return (test_result != 0);
 }
 
 /** Get self-test enabled setting for accelerometer X axis.
  * @param enabled Self-test enabled value
- * @see MPU9250_RA_ACCEL_CONFIG
+ * @see MPU9250_SELF_TEST_X_ACCEL
  */
-bool MPU9250::setAccelXSelfTest(const bool enabled) {
-    return writeMaskedRegister(MPU9250_ACCEL_CONFIG, uint8_t mask, enabled); //, MPU9250_ACONFIG_XA_ST_BIT, enabled);//check if ACCEL CONFIG2 is relevant
+bool MPU9250::setAccelXSelfTest(const uint8_t enabled) {
+    return writeRegister(MPU9250_SELF_TEST_X_ACCEL, enabled); //, MPU9250_ACONFIG_XA_ST_BIT, enabled);//check if ACCEL CONFIG2 is relevant
 }
 
 /** Get self-test enabled value for accelerometer Y axis.
  * @return Self-test enabled value
- * @see MPU9250_RA_ACCEL_CONFIG
+ * @see MPU9250_SELF_TEST_Y_ACCEL
  */
 bool MPU9250::getAccelYSelfTest(void) {
-    uint8_t test_result = readMaskedRegister(MPU9250_ACCEL_CONFIG, uint8_t mask); //, MPU9250_ACONFIG_YA_ST_BIT, buffer);//check if ACCEL CONFIG2 is relevant
+    uint8_t test_result = readRegister(MPU9250_SELF_TEST_Y_ACCEL); //, MPU9250_ACONFIG_YA_ST_BIT, buffer);//check if ACCEL CONFIG2 is relevant
     return (test_result != 0);
 }
 
 /** Get self-test enabled value for accelerometer Y axis.
  * @param enabled Self-test enabled value
- * @see MPU9250_RA_ACCEL_CONFIG
+ * @see MPU9250_SELF_TEST_Y_ACCEL
  */
-bool MPU9250::setAccelYSelfTest(const bool enabled) {
-    return writeMaskedRegister(MPU9250_ACCEL_CONFIG, uint8_t mask, enabled); //, MPU9250_ACONFIG_YA_ST_BIT, enabled);//check if ACCEL CONFIG2 is relevant
+bool MPU9250::setAccelYSelfTest(const uint8_t enabled) {
+    return writeRegister(MPU9250_SELF_TEST_Y_ACCEL, enabled); //, MPU9250_ACONFIG_YA_ST_BIT, enabled);//check if ACCEL CONFIG2 is relevant
 }
 
 /** Get self-test enabled value for accelerometer Z axis.
  * @return Self-test enabled value
- * @see MPU9250_RA_ACCEL_CONFIG
+ * @see MPU9250_SELF_TEST_Z_ACCEL
  */
 bool MPU9250::getAccelZSelfTest(void) {
-    uint8_t test_result = readMaskedRegister(MPU9250_ACCEL_CONFIG, uint8_t mask); //, MPU9250_ACONFIG_ZA_ST_BIT, buffer);//check if ACCEL CONFIG2 is relevant
+    uint8_t test_result = readRegister(MPU9250_SELF_TEST_Z_ACCEL); //, MPU9250_ACONFIG_ZA_ST_BIT, buffer);//check if ACCEL CONFIG2 is relevant
     return (test_result != 0)
 }
 
 /** Set self-test enabled value for accelerometer Z axis.
  * @param enabled Self-test enabled value
- * @see MPU9250_RA_ACCEL_CONFIG
+ * @see MPU9250_SELF_TEST_Z_ACCEL
  */
-bool MPU9250::setAccelZSelfTest(const bool enabled) {
-    return writeMaskedRegister(MPU9250_ACCEL_CONFIG, uint8_t mask, enabled); //MPU9250_RA_ACCEL_CONFIG, MPU9250_ACONFIG_ZA_ST_BIT, enabled);//check if ACCEL CONFIG2 is relevant
+bool MPU9250::setAccelZSelfTest(const uint8_t enabled) {
+    return writeRegister(MPU9250_SELF_TEST_Z_ACCEL, enabled); //MPU9250_RA_ACCEL_CONFIG, MPU9250_ACONFIG_ZA_ST_BIT, enabled);//check if ACCEL CONFIG2 is relevant
 }
 
 /** Get full-scale accelerometer range.
@@ -2712,37 +2712,57 @@ bool MPU9250::setFIFOByte(const uint8_t data) {
 
 // XG_OFFS_TC register
 uint8_t MPU9250::getOTPBankValid(void) {
-    return readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_XG_OFFS_TC, MPU9250_TC_OTP_BNK_VLD_BIT, buffer);
+    return 0;
+    //return readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_XG_OFFS_TC, MPU9250_TC_OTP_BNK_VLD_BIT, buffer);
 }
 
 bool MPU9250::setOTPBankValid(const bool enabled) {
-    return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_XG_OFFS_TC, MPU9250_TC_OTP_BNK_VLD_BIT, enabled);
+    return 0;
+    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_XG_OFFS_TC, MPU9250_TC_OTP_BNK_VLD_BIT, enabled);
 }
 
 int8_t MPU9250::getXGyroOffset(void) {
-    return readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_XG_OFFS_TC, MPU9250_TC_OFFSET_BIT, MPU9250_TC_OFFSET_LENGTH, buffer);
+    msb = readRegister(MPU9250_XG_OFFSET_H);
+    lsb = readRegister(MPU9250_XG_OFFSET_L);
+    return (msb << 8 | lsb); //I think
 }
 
-bool MPU9250::setXGyroOffset(const int8_t offset) {
-    return writeMaskedRegister(uint8_t register_addr, uint8_t mask, offset); //MPU9250_RA_XG_OFFS_TC, MPU9250_TC_OFFSET_BIT, MPU9250_TC_OFFSET_LENGTH, offset);
+bool MPU9250::setXGyroOffset(const int16_t offset) {
+    uint8_t msb_offset = offset >> 8;
+    uint8_t lsb_offset = offset & 0x00FF
+    bool msb_check = writeRegister(MPU9250_XG_OFFSET_H, msb_offset);
+    bool lsb_check = writeRegister(MPU9250_XG_OFFSET_L, lsb_offset);
+    return msb_check | lsb_check;
 }
 
 // YG_OFFS_TC register
 int8_t MPU9250::getYGyroOffset(void) {
-    return readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_YG_OFFS_TC, MPU9250_TC_OFFSET_BIT, MPU9250_TC_OFFSET_LENGTH, buffer);
+    msb = readRegister(MPU9250_YG_OFFSET_H);
+    lsb = readRegister(MPU9250_YG_OFFSET_L);
+    return (msb << 8 | lsb); //I think
 }
 
-bool MPU9250::setYGyroOffset(const int8_t offset) {
-    return writeMaskedRegister(uint8_t register_addr, uint8_t mask, offset); //MPU9250_RA_YG_OFFS_TC, MPU9250_TC_OFFSET_BIT, MPU9250_TC_OFFSET_LENGTH, offset);
+bool MPU9250::setYGyroOffset(const int16_t offset) {
+    uint8_t msb_offset = offset >> 8;
+    uint8_t lsb_offset = offset & 0x00FF
+    bool msb_check = writeRegister(MPU9250_YG_OFFSET_H, msb_offset);
+    bool lsb_check = writeRegister(MPU9250_YG_OFFSET_L, lsb_offset);
+    return msb_check | lsb_check;
 }
 
 // ZG_OFFS_TC register
 int8_t MPU9250::getZGyroOffset(void) {
-    return readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_ZG_OFFS_TC, MPU9250_TC_OFFSET_BIT, MPU9250_TC_OFFSET_LENGTH, buffer);
+    msb = readRegister(MPU9250_ZG_OFFSET_H);
+    lsb = readRegister(MPU9250_ZG_OFFSET_L);
+    return (msb << 8 | lsb); //I think
 }
 
-bool MPU9250::setZGyroOffset(const int8_t offset) {
-    return writeMaskedRegister(uint8_t register_addr, uint8_t mask, offset); //MPU9250_RA_ZG_OFFS_TC, MPU9250_TC_OFFSET_BIT, MPU9250_TC_OFFSET_LENGTH, offset);
+bool MPU9250::setZGyroOffset(const int16_t offset) {
+    uint8_t msb_offset = offset >> 8;
+    uint8_t lsb_offset = offset & 0x00FF
+    bool msb_check = writeRegister(MPU9250_ZG_OFFSET_H, msb_offset);
+    bool lsb_check = writeRegister(MPU9250_ZG_OFFSET_L, lsb_offset);
+    return msb_check | lsb_check;
 }
 
 // X_FINE_GAIN register
@@ -2774,7 +2794,7 @@ bool MPU9250::setZFineGain(const int8_t gain) {
 
 // XA_OFFS_* registers
 int16_t MPU9250::getXAccelOffset(void) {
-    return readRegisters(MPU9250_RA_XA_OFFS_H, UNKNOWN_REGISTER);
+    return readRegisters(MPU9250_RA_XA_OFFS_H, MPU9250_RA_XA_OFFS_L);
 }
 
 void MPU9250::setXAccelOffset(const int16_t offset) {
@@ -2783,7 +2803,7 @@ void MPU9250::setXAccelOffset(const int16_t offset) {
 
 // YA_OFFS_* register
 int16_t MPU9250::getYAccelOffset(void) {
-    return readRegisters(MPU9250_RA_YA_OFFS_H, UNKNOWN_REGISTER);
+    return readRegisters(MPU9250_RA_YA_OFFS_H, MPU9250_RA_YA_OFFS_L);
 }
 
 void MPU9250::setYAccelOffset(const int16_t offset) {
@@ -2792,11 +2812,12 @@ void MPU9250::setYAccelOffset(const int16_t offset) {
 
 // ZA_OFFS_* register
 int16_t MPU9250::getZAccelOffset(void) {
-    return readRegisters(MPU9250_RA_ZA_OFFS_H, UNKNOWN_REGISTER);
+    return readRegisters(MPU9250_RA_ZA_OFFS_H, MPU9250_RA_ZA_OFFS_L);
 }
 
 void MPU9250::setZAccelOffset(const int16_t offset) {
-    I2Cdev::writeWord(_address, MPU9250_RA_ZA_OFFS_H, offset);
+    I2Cdev::writeWord(_address, MPU9250_RA_ZA_OFFS_H, offset >> 8);
+    I2Cdev::writeWord(_address, MPU9250_RA_ZA_OFFS_L, offset);
 }
 
 // XG_OFFS_USR* registers
@@ -2829,77 +2850,92 @@ void MPU9250::setZGyroOffsetUser(const int16_t offset) {
 
 // INT_ENABLE register (DMP functions)
 bool MPU9250::getIntPLLReadyEnabled(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_PLL_RDY_INT_BIT, buffer);
-    return (response != 0);
+    return 0;
+    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_PLL_RDY_INT_BIT, buffer);
+    //return (response != 0);
 }
 
 bool MPU9250::setIntPLLReadyEnabled(const bool enabled) {
-    return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_PLL_RDY_INT_BIT, enabled);
+    return 0;
+    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_PLL_RDY_INT_BIT, enabled);
 }
 
 bool MPU9250::getIntDMPEnabled(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_DMP_INT_BIT, buffer);
-    return (response != 0);
+    return 0;
+    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_DMP_INT_BIT, buffer);
+    //return (response != 0);
 }
 
 bool MPU9250::setIntDMPEnabled(const bool enabled) {
-    return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_DMP_INT_BIT, enabled);
+    return 0;
+    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_DMP_INT_BIT, enabled);
 }
 
 // DMP_INT_STATUS
 bool MPU9250::getDMPInt5Status(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_DMP_INT_STATUS, MPU9250_DMPINT_5_BIT, buffer);
-    return (response != 0);
+    return 0;
+    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_DMP_INT_STATUS, MPU9250_DMPINT_5_BIT, buffer);
+    //return (response != 0);
 }
 
 bool MPU9250::getDMPInt4Status(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_DMP_INT_STATUS, MPU9250_DMPINT_4_BIT, buffer);
-    return (response != 0);
+    return 0;
+    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_DMP_INT_STATUS, MPU9250_DMPINT_4_BIT, buffer);
+    //return (response != 0);
 }
 
 bool MPU9250::getDMPInt3Status(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_DMP_INT_STATUS, MPU9250_DMPINT_3_BIT, buffer);
-    return (response != 0);
+    return 0;
+    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_DMP_INT_STATUS, MPU9250_DMPINT_3_BIT, buffer);
+    //return (response != 0);
 }
 
 bool MPU9250::getDMPInt2Status(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_DMP_INT_STATUS, MPU9250_DMPINT_2_BIT, buffer);
-    return (response != 0);
+    return 0;
+    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_DMP_INT_STATUS, MPU9250_DMPINT_2_BIT, buffer);
+    //return (response != 0);
 }
 
 bool MPU9250::getDMPInt1Status(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_DMP_INT_STATUS, MPU9250_DMPINT_1_BIT, buffer);
-    return (response != 0);
+    return 0;
+    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_DMP_INT_STATUS, MPU9250_DMPINT_1_BIT, buffer);
+    //return (response != 0);
 }
 
 bool MPU9250::getDMPInt0Status(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_DMP_INT_STATUS, MPU9250_DMPINT_0_BIT, buffer);
-    return (response != 0);
+    return 0;
+    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_DMP_INT_STATUS, MPU9250_DMPINT_0_BIT, buffer);
+    //return (response != 0);
 }
 
 // INT_STATUS register (DMP functions)
 bool MPU9250::getIntPLLReadyStatus(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_STATUS, MPU9250_INTERRUPT_PLL_RDY_INT_BIT, buffer);
-    return (response != 0);
+    return 0;
+    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_STATUS, MPU9250_INTERRUPT_PLL_RDY_INT_BIT, buffer);
+    //return (response != 0);
 }
 
 bool MPU9250::getIntDMPStatus(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_STATUS, MPU9250_INTERRUPT_DMP_INT_BIT, buffer);
-    return (response != 0);
+    return 0;
+    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_STATUS, MPU9250_INTERRUPT_DMP_INT_BIT, buffer);
+    //return (response != 0);
 }
 
 // USER_CTRL register (DMP functions)
 bool MPU9250::getDMPEnabled(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_USER_CTRL, MPU9250_USERCTRL_DMP_EN_BIT, buffer);
-    return (response != 0);
+    return 0;
+    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_USER_CTRL, MPU9250_USERCTRL_DMP_EN_BIT, buffer);
+    //return (response != 0);
 }
 
 bool MPU9250::setDMPEnabled(const bool enabled) {
-    return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_USER_CTRL, MPU9250_USERCTRL_DMP_EN_BIT, enabled);
+    return 0;
+    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_USER_CTRL, MPU9250_USERCTRL_DMP_EN_BIT, enabled);
 }
 
 bool MPU9250::resetDMP(void) {
-    return writeMaskedRegister(uint8_t register_addr, uint8_t mask, true); //MPU9250_RA_USER_CTRL, MPU9250_USERCTRL_DMP_RESET_BIT, true);
+    return 0;
+    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, true); //MPU9250_RA_USER_CTRL, MPU9250_USERCTRL_DMP_RESET_BIT, true);
 }
 
 // BANK_SEL register
@@ -3442,12 +3478,12 @@ void MPU9250::getMotion9(int16_t* ax, int16_t* ay, int16_t* az, int16_t* gx, int
     writeRegister(MPU9250_MAG_ADDRESS, 0x0A, 0x01); //enable the magnetometer
     mag_addr = readRegister(MPU9250_MAG_ADDRESS); //check what this static variable is/does
     
-    mx_low = readRegister(MPU9250_MAG_XOUT_L)
-    mx_high = readRegister(MPU9250_MAG_XOUT_H)
-    my_low = readRegister(MPU9250_MAG_YOUT_L)
-    my_high = readRegister(MPU9250_MAG_YOUT_H)
-    mz_low = readRegister(MPU9250_MAG_ZOUT_L)
-    mz_high = readRegister(MPU9250_MAG_ZOUT_H)
+    mx_low = readRegister(MPU9250_MAG_XOUT_L);
+    mx_high = readRegister(MPU9250_MAG_XOUT_H);
+    my_low = readRegister(MPU9250_MAG_YOUT_L);
+    my_high = readRegister(MPU9250_MAG_YOUT_H);
+    mz_low = readRegister(MPU9250_MAG_ZOUT_L);
+    mz_high = readRegister(MPU9250_MAG_ZOUT_H);
 
     *mx = (((int16_t)mx_high) << 8) | mx_low;
     *my = (((int16_t)my_high) << 8) | my_low;
@@ -3457,11 +3493,13 @@ void MPU9250::getMotion9(int16_t* ax, int16_t* ay, int16_t* az, int16_t* gx, int
 //Temperature functions
 
 bool MPU9250::enableTemperature(void) {
-    return writeRegister(UNKNOWN_REGISTER, UNKNOWN_VALUE);
+    //return writeRegister(UNKNOWN_REGISTER, UNKNOWN_VALUE);
+    return 0;
 }
 
 bool MPU9250::disableTemperature(void) {
-    return writeRegister(UNKNOWN_REGISTER, UNKNOWN_VALUE);
+    return 0;
+    //return writeRegister(UNKNOWN_REGISTER, UNKNOWN_VALUE);
 }
 
 bool MPU9250::temperatureIsEnabled(void) {
@@ -3474,6 +3512,7 @@ int16_t MPU9250::getTemperature(void) {
         //get currnet internal temperature reading in 16-bit 2's complement format
         return (int16_t) readRegisters(MPU9250_TEMP_OUT_H, MPU9250_TEMP_OUT_L); 
         //WARNING readRegisters function currently returns uint16_t instead of int16_t
+        //((Temp_out - room_temp_offset)/temp_sensitivity) + 21; //celcius
     } else {
         return 0;
     }
