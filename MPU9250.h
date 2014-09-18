@@ -605,12 +605,12 @@ class MPU9250 {
         int16_t getZGyroOffsetUser(void);
         void setZGyroOffsetUser(const int16_t offset);
 
-        int8_t getXGyroOffset(void);
-        bool setXGyroOffset(const int8_t offset);
-        int8_t getYGyroOffset(void);
-        bool setYGyroOffset(const int8_t offset);
-        int8_t getZGyroOffset(void);
-        bool setZGyroOffset(const int8_t offset);
+        int16_t getXGyroOffset(void);
+        bool setXGyroOffset(const int16_t offset);
+        int16_t getYGyroOffset(void);
+        bool setYGyroOffset(const int16_t offset);
+        int16_t getZGyroOffset(void);
+        bool setZGyroOffset(const int16_t offset);
 
         int16_t getRotationX(void);
         int16_t getRotationY(void);
