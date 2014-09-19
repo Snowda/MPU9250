@@ -554,11 +554,11 @@ class MPU9250 {
         bool setAccelerometerPowerOnDelay(const uint8_t delay);
 
         int16_t getXAccelOffset(void);
-        void setXAccelOffset(const int16_t offset);
+        bool setXAccelOffset(const int16_t offset);
         int16_t getYAccelOffset(void);
-        void setYAccelOffset(const int16_t offset);
+        bool setYAccelOffset(const int16_t offset);
         int16_t getZAccelOffset(void);
-        void setZAccelOffset(const int16_t offset);
+        bool setZAccelOffset(const int16_t offset);
 
         bool getStandbyXAccelEnabled(void);
         bool setStandbyXAccelEnabled(const bool enabled);
