@@ -609,11 +609,7 @@ bool MPU9250::setZeroMotionDetectionDuration(const uint8_t duration) {
  */
 bool MPU9250::getTempFIFOEnabled(void) {
     uint8_t response = readMaskedRegister(MPU9250_FIFO_EN, MPU9250_TEMP_FIFO_EN_MASK);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
-    }
+    return (response != 0);
 }
 
 /** Set temperature FIFO enabled value.
@@ -633,11 +629,7 @@ bool MPU9250::setTempFIFOEnabled(const bool enabled) {
  */
 bool MPU9250::getXGyroFIFOEnabled(void) {
     uint8_t response = readMaskedRegister(MPU9250_FIFO_EN, MPU9250_GYRO_XOUT_MASK);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
-    }
+    return (response != 0);
 }
 
 /** Set gyroscope X-axis FIFO enabled value.
@@ -657,11 +649,7 @@ bool MPU9250::setXGyroFIFOEnabled(const bool enabled) {
  */
 bool MPU9250::getYGyroFIFOEnabled(void) {
     uint8_t response = readMaskedRegister(MPU9250_FIFO_EN, MPU9250_GYRO_YOUT_MASK);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
-    }
+    return (response != 0);
 }
 
 /** Set gyroscope Y-axis FIFO enabled value.
@@ -681,11 +669,7 @@ bool MPU9250::setYGyroFIFOEnabled(const bool enabled) {
  */
 bool MPU9250::getZGyroFIFOEnabled(void) {
     uint8_t response = readMaskedRegister(MPU9250_FIFO_EN, MPU9250_GYRO_ZOUT_MASK);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
-    }
+    return (response != 0);
 }
 
 /** Set gyroscope Z-axis FIFO enabled value.
@@ -706,11 +690,7 @@ bool MPU9250::setZGyroFIFOEnabled(const bool enabled) {
  */
 bool MPU9250::getAccelFIFOEnabled(void) {
     uint8_t response = readMaskedRegister(MPU9250_FIFO_EN, MPU9250_ACCEL_MASK);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
-    }
+    return (response != 0);
 }
 
 /** Set accelerometer FIFO enabled value.
@@ -730,11 +710,7 @@ bool MPU9250::setAccelFIFOEnabled(const bool enabled) {
  */
 bool MPU9250::getSlave2FIFOEnabled(void) {
     uint8_t response = readMaskedRegister(MPU9250_FIFO_EN, MPU9250_SLV2_MASK);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
-    }
+    return (response != 0);
 }
 
 /** Set Slave 2 FIFO enabled value.
@@ -754,11 +730,7 @@ bool MPU9250::setSlave2FIFOEnabled(const bool enabled) {
  */
 bool MPU9250::getSlave1FIFOEnabled(void) {
     uint8_t response = readMaskedRegister(MPU9250_FIFO_EN, MPU9250_SLV1_MASK);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
-    }
+    return (response != 0);
 }
 
 /** Set Slave 1 FIFO enabled value.
@@ -778,11 +750,7 @@ bool MPU9250::setSlave1FIFOEnabled(const bool enabled) {
  */
 bool MPU9250::getSlave0FIFOEnabled(void) {
     uint8_t response = readMaskedRegister(MPU9250_FIFO_EN, MPU9250_SLV0_MASK);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
-    }
+    return (response != 0);
 }
 
 /** Set Slave 0 FIFO enabled value.
@@ -812,12 +780,8 @@ bool MPU9250::setSlave0FIFOEnabled(const bool enabled) {
  * @see MPU9250_RA_I2C_MST_CTRL
  */
 bool MPU9250::getMultiMasterEnabled(void) {
-    uint8_t response = readMaskedRegister(MPU9250_I2C_MST_CTRL, MPU9250_MULT_MST_EN_MASK); //MPU9250_RA_I2C_MST_CTRL, MPU9250_MULT_MST_EN_BIT, buffer);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
-    }
+    uint8_t response = readMaskedRegister(MPU9250_I2C_MST_CTRL, MPU9250_MULT_MST_EN_MASK);
+    return (response != 0);
 }
 
 /** Set multi-master enabled value.
@@ -826,7 +790,7 @@ bool MPU9250::getMultiMasterEnabled(void) {
  * @see MPU9250_RA_I2C_MST_CTRL
  */
 bool MPU9250::setMultiMasterEnabled(const bool enabled) {
-    return writeMaskedRegister(MPU9250_I2C_MST_CTRL, MPU9250_MULT_MST_EN_MASK, enabled); //MPU9250_RA_I2C_MST_CTRL, MPU9250_MULT_MST_EN_BIT, enabled);
+    return writeMaskedRegister(MPU9250_I2C_MST_CTRL, MPU9250_MULT_MST_EN_MASK, enabled);
 }
 
 /** Get wait-for-external-sensor-data enabled value.
@@ -841,12 +805,8 @@ bool MPU9250::setMultiMasterEnabled(const bool enabled) {
  * @see MPU9250_RA_I2C_MST_CTRL
  */
 bool MPU9250::getWaitForExternalSensorEnabled(void) {
-    uint8_t response = readMaskedRegister(MPU9250_I2C_MST_CTRL, MPU9250_WAIT_FOR_ES_MASK); //MPU9250_RA_I2C_MST_CTRL, MPU9250_WAIT_FOR_ES_BIT, buffer);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
-    }
+    uint8_t response = readMaskedRegister(MPU9250_I2C_MST_CTRL, MPU9250_WAIT_FOR_ES_MASK);
+    return (response != 0);
 }
 
 /** Set wait-for-external-sensor-data enabled value.
@@ -855,7 +815,7 @@ bool MPU9250::getWaitForExternalSensorEnabled(void) {
  * @see MPU9250_RA_I2C_MST_CTRL
  */
 bool MPU9250::setWaitForExternalSensorEnabled(const bool enabled) {
-    return writeMaskedRegister(MPU9250_I2C_MST_CTRL, MPU9250_WAIT_FOR_ES_MASK, enabled); //MPU9250_RA_I2C_MST_CTRL, MPU9250_WAIT_FOR_ES_BIT, enabled);
+    return writeMaskedRegister(MPU9250_I2C_MST_CTRL, MPU9250_WAIT_FOR_ES_MASK, enabled);
 }
 
 /** Get Slave 3 FIFO enabled value.
@@ -865,12 +825,8 @@ bool MPU9250::setWaitForExternalSensorEnabled(const bool enabled) {
  * @see MPU9250_RA_MST_CTRL
  */
 bool MPU9250::getSlave3FIFOEnabled(void) {
-    uint8_t response = readMaskedRegister(MPU9250_I2C_MST_CTRL, MPU9250_SLV_3_FIFO_EN_MASK); //MPU9250_RA_I2C_MST_CTRL, MPU9250_SLV_3_FIFO_EN_BIT, buffer);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
-    }
+    uint8_t response = readMaskedRegister(MPU9250_I2C_MST_CTRL, MPU9250_SLV_3_FIFO_EN_MASK);
+    return (response != 0);
 }
 
 /** Set Slave 3 FIFO enabled value.
@@ -879,7 +835,7 @@ bool MPU9250::getSlave3FIFOEnabled(void) {
  * @see MPU9250_RA_MST_CTRL
  */
 bool MPU9250::setSlave3FIFOEnabled(const bool enabled) {
-    return writeMaskedRegister(MPU9250_I2C_MST_CTRL, MPU9250_SLV_3_FIFO_EN_MASK, enabled); //MPU9250_RA_I2C_MST_CTRL, MPU9250_SLV_3_FIFO_EN_BIT, enabled);
+    return writeMaskedRegister(MPU9250_I2C_MST_CTRL, MPU9250_SLV_3_FIFO_EN_MASK, enabled);
 }
 
 /** Get slave read/write transition enabled value.
@@ -893,7 +849,7 @@ bool MPU9250::setSlave3FIFOEnabled(const bool enabled) {
  * @see MPU9250_RA_I2C_MST_CTRL
  */
 bool MPU9250::getSlaveReadWriteTransitionEnabled(void) {
-    uint8_t response = readMaskedRegister(MPU9250_I2C_MST_CTRL, MPU9250_I2C_MST_P_NSR_MASK); //MPU9250_RA_I2C_MST_CTRL, MPU9250_I2C_MST_P_NSR_MASK, buffer);
+    uint8_t response = readMaskedRegister(MPU9250_I2C_MST_CTRL, MPU9250_I2C_MST_P_NSR_MASK);
     return (response != 0);
 }
 
@@ -903,7 +859,7 @@ bool MPU9250::getSlaveReadWriteTransitionEnabled(void) {
  * @see MPU9250_RA_I2C_MST_CTRL
  */
 bool MPU9250::setSlaveReadWriteTransitionEnabled(const bool enabled) {
-    return writeMaskedRegister(MPU9250_I2C_MST_CTRL, MPU9250_I2C_MST_P_NSR_MASK, enabled); //MPU9250_RA_I2C_MST_CTRL, MPU9250_I2C_MST_P_NSR_BIT, enabled);
+    return writeMaskedRegister(MPU9250_I2C_MST_CTRL, MPU9250_I2C_MST_P_NSR_MASK, enabled);
 }
 
 /** Get I2C master clock speed.
@@ -994,7 +950,9 @@ bool MPU9250::setMasterClockSpeed(const uint8_t speed) {
  * @see MPU9250_RA_I2C_SLV0_ADDR
  */
 uint8_t MPU9250::getSlaveAddress(uint8_t num) {
-    if (num > 3) return 0;
+    if(num > 3) {
+        return 0;
+    }
     return readRegister(MPU9250_I2C_SLV0_ADDR + num*3);
 }
 
@@ -1005,7 +963,9 @@ uint8_t MPU9250::getSlaveAddress(uint8_t num) {
  * @see MPU9250_RA_I2C_SLV0_ADDR
  */
 bool MPU9250::setSlaveAddress(uint8_t num, uint8_t address) {
-    if (num > 3) return;
+    if(num > 3) {
+        return 0;
+    }
     return writeRegister(MPU9250_I2C_SLV0_ADDR + num*3, address);
 }
 
@@ -1021,7 +981,9 @@ bool MPU9250::setSlaveAddress(uint8_t num, uint8_t address) {
  * @see MPU9250_RA_I2C_SLV0_REG
  */
 uint8_t MPU9250::getSlaveRegister(uint8_t num) {
-    if (num > 3) return 0;
+    if(num > 3) {
+        return 0;
+    }
     return readRegister(MPU9250_I2C_SLV0_REG + num*3);
 }
 
@@ -1032,7 +994,9 @@ uint8_t MPU9250::getSlaveRegister(uint8_t num) {
  * @see MPU9250_RA_I2C_SLV0_REG
  */
 bool MPU9250::setSlaveRegister(uint8_t num, uint8_t reg) {
-    if (num > 3) return;
+    if(num > 3) {
+        return 0;
+    }
     return writeRegister(MPU9250_I2C_SLV0_REG + num*3, reg);
 }
 
@@ -1044,8 +1008,10 @@ bool MPU9250::setSlaveRegister(uint8_t num, uint8_t reg) {
  * @see MPU9250_RA_I2C_SLV0_CTRL
  */
 bool MPU9250::getSlaveEnabled(uint8_t num) {
-    if (num > 3) return 0;
-    uint8_t response = readMaskedRegister(MPU9250_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV0_EN_MASK); //MPU9250_RA_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV_EN_BIT, buffer);
+    if(num > 3) {
+        return 0;
+    }
+    uint8_t response = readMaskedRegister(MPU9250_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV0_EN_MASK);
     return (response != 0);
 }
 
@@ -1056,8 +1022,10 @@ bool MPU9250::getSlaveEnabled(uint8_t num) {
  * @see MPU9250_RA_I2C_SLV0_CTRL
  */
 bool MPU9250::setSlaveEnabled(uint8_t num, const bool enabled) {
-    if (num > 3) return 0;
-    return writeMaskedRegister(MPU9250_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV0_EN_MASK, enabled); //MPU9250_RA_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV_EN_BIT, enabled);
+    if(num > 3) {
+        return 0;
+    }
+    return writeMaskedRegister(MPU9250_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV0_EN_MASK, enabled);
 }
 
 /** Get word pair byte-swapping enabled for the specified slave (0-3).
@@ -1072,24 +1040,24 @@ bool MPU9250::setSlaveEnabled(uint8_t num, const bool enabled) {
  * @see MPU9250_RA_I2C_SLV0_CTRL
  */
 bool MPU9250::getSlaveWordByteSwap(uint8_t num) {
-    if (num > 3) return 0;
-    uint8_t response = readMaskedRegister(MPU9250_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV0_BYTE_SW_MASK); //MPU9250_RA_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV_BYTE_SW_BIT, buffer);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
+    if(num > 3) {
+        return 0;
     }
+    uint8_t response = readMaskedRegister(MPU9250_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV0_BYTE_SW_MASK);
+    return (response != 0);
 }
 
 /** Set word pair byte-swapping enabled for the specified slave (0-3).
  * @param num Slave number (0-3)
  * @param enabled New word pair byte-swapping enabled value for specified slave
  * @see getSlaveWordByteSwap()
- * @see MPU9250_RA_I2C_SLV0_CTRL
+ * @see MPU9250_I2C_SLV0_CTRL
  */
 bool MPU9250::setSlaveWordByteSwap(uint8_t num, const bool enabled) {
-    if (num > 3) return;
-    return writeMaskedRegister(MPU9250_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV0_BYTE_SW_MASK, enabled); //MPU9250_RA_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV_BYTE_SW_BIT, enabled);
+    if(num > 3) {
+        return 0;
+    }
+    return writeMaskedRegister(MPU9250_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV0_BYTE_SW_MASK, enabled);
 }
 
 /** Get write mode for the specified slave (0-3).
@@ -1100,16 +1068,14 @@ bool MPU9250::setSlaveWordByteSwap(uint8_t num, const bool enabled) {
  *
  * @param num Slave number (0-3)
  * @return Current write mode for specified slave (0 = register address + data, 1 = data only)
- * @see MPU9250_RA_I2C_SLV0_CTRL
+ * @see MPU9250_I2C_SLV0_CTRL
  */
 bool MPU9250::getSlaveWriteMode(uint8_t num) {
-    if (num > 3) return 0;
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV_REG_DIS_BIT, buffer);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
+    if(num > 3) {
+        return 0;
     }
+    uint8_t response = readMaskedRegister(MPU9250_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV0_REG_DIS_MASK);
+    return (response != 0);
 }
 
 /** Set write mode for the specified slave (0-3).
@@ -1119,8 +1085,10 @@ bool MPU9250::getSlaveWriteMode(uint8_t num) {
  * @see MPU9250_RA_I2C_SLV0_CTRL
  */
 bool MPU9250::setSlaveWriteMode(uint8_t num, const bool mode) {
-    if (num > 3) return;
-    return writeMaskedRegister(uint8_t register_addr, uint8_t mask, mode); //MPU9250_RA_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV_REG_DIS_BIT, mode);
+    if(num > 3) {
+        return 0;
+    }
+    return writeMaskedRegister(MPU9250_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV0_REG_DIS_MASK, mode);
 }
 
 /** Get word pair grouping order offset for the specified slave (0-3).
@@ -1135,13 +1103,11 @@ bool MPU9250::setSlaveWriteMode(uint8_t num, const bool mode) {
  * @see MPU9250_RA_I2C_SLV0_CTRL
  */
 bool MPU9250::getSlaveWordGroupOffset(uint8_t num) {
-    if (num > 3) return 0;
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV_GRP_BIT, buffer);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
+    if(num > 3) {
+        return 0;
     }
+    uint8_t response = readMaskedRegister(MPU9250_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV0_GRP_MASK);
+    return (response != 0);
 }
 
 /** Set word pair grouping order offset for the specified slave (0-3).
@@ -1151,8 +1117,10 @@ bool MPU9250::getSlaveWordGroupOffset(uint8_t num) {
  * @see MPU9250_RA_I2C_SLV0_CTRL
  */
 bool MPU9250::setSlaveWordGroupOffset(uint8_t num, const bool enabled) {
-    if (num > 3) return;
-    return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV_GRP_BIT, enabled);
+    if(num > 3) {
+        return 0;
+    }
+    return writeMaskedRegister(MPU9250_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV0_GRP_MASK, enabled);
 }
 
 /** Get number of bytes to read for the specified slave (0-3).
@@ -1163,11 +1131,10 @@ bool MPU9250::setSlaveWordGroupOffset(uint8_t num, const bool enabled) {
  * @see MPU9250_RA_I2C_SLV0_CTRL
  */
 uint8_t MPU9250::getSlaveDataLength(uint8_t num) {
-    if (num > 3) {
+    if(num > 3) {
         return 0;
-    } else {
-        return readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV_LEN_BIT, MPU9250_I2C_SLV_LEN_LENGTH, buffer);
     }
+    return readMaskedRegister(MPU9250_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV0_LENG_MASK);
 }
 
 /** Set number of bytes to read for the specified slave (0-3).
@@ -1177,11 +1144,10 @@ uint8_t MPU9250::getSlaveDataLength(uint8_t num) {
  * @see MPU9250_RA_I2C_SLV0_CTRL
  */
 bool MPU9250::setSlaveDataLength(uint8_t num, const uint8_t length) {
-    if (num > 3) {
+    if(num > 3) {
         return false;
-    } else {
-        return writeMaskedRegister(uint8_t register_addr, uint8_t mask, length); //MPU9250_RA_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV_LEN_BIT, MPU9250_I2C_SLV_LEN_LENGTH, length);
     }
+    return writeMaskedRegister(MPU9250_I2C_SLV0_CTRL + num*3, MPU9250_I2C_SLV0_LENG_MASK, length);
 }
 
 // I2C_SLV* registers (Slave 4)
@@ -1235,7 +1201,7 @@ bool MPU9250::setSlave4Register(const uint8_t reg) {
  * @see MPU9250_RA_I2C_SLV4_DO
  */
 bool MPU9250::setSlave4OutputByte(const uint8_t data) {
-    return writeRegister(MPU9250_RA_I2C_SLV4_DO, data);
+    return writeRegister(MPU9250_I2C_SLV4_DO, data); 
 }
 
 /** Get the enabled value for the Slave 4.
@@ -1245,21 +1211,17 @@ bool MPU9250::setSlave4OutputByte(const uint8_t data) {
  * @see MPU9250_RA_I2C_SLV4_CTRL
  */
 bool MPU9250::getSlave4Enabled(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_I2C_SLV4_CTRL, MPU9250_I2C_SLV4_EN_BIT, buffer);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
-    }
+    uint8_t response = readMaskedRegister(MPU9250_I2C_SLV4_CTRL, MPU9250_I2C_SLV4_EN_MASK);
+    return (response != 0);
 }
 
 /** Set the enabled value for Slave 4.
  * @param enabled New enabled value for Slave 4
  * @see getSlave4Enabled()
- * @see MPU9250_RA_I2C_SLV4_CTRL
+ * @see MPU9250_I2C_SLV4_CTRL
  */
 bool MPU9250::setSlave4Enabled(const bool enabled) {
-    return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_I2C_SLV4_CTRL, MPU9250_I2C_SLV4_EN_BIT, enabled);
+    return writeMaskedRegister(MPU9250_I2C_SLV4_CTRL, MPU9250_I2C_SLV4_EN_MASK, enabled);
 }
 
 /** Get the enabled value for Slave 4 transaction interrupts.
@@ -1272,21 +1234,17 @@ bool MPU9250::setSlave4Enabled(const bool enabled) {
  * @see MPU9250_RA_I2C_SLV4_CTRL
  */
 bool MPU9250::getSlave4InterruptEnabled(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_I2C_SLV4_CTRL, MPU9250_I2C_SLV4_INT_EN_BIT, buffer);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
-    }
+    uint8_t response = readMaskedRegister(MPU9250_I2C_SLV4_CTRL, MPU9250_SLV4_DONE_INT_EN_MASK);
+    return (response != 0);
 }
 
 /** Set the enabled value for Slave 4 transaction interrupts.
  * @param enabled New enabled value for Slave 4 transaction interrupts.
  * @see getSlave4InterruptEnabled()
- * @see MPU9250_RA_I2C_SLV4_CTRL
+ * @see MPU9250_I2C_SLV4_CTRL
  */
 bool MPU9250::setSlave4InterruptEnabled(const bool enabled) {
-    return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_I2C_SLV4_CTRL, MPU9250_I2C_SLV4_INT_EN_BIT, enabled);
+    return writeMaskedRegister(MPU9250_I2C_SLV4_CTRL, MPU9250_SLV4_DONE_INT_EN_MASK, enabled);
 }
 
 /** Get write mode for Slave 4.
@@ -1299,21 +1257,17 @@ bool MPU9250::setSlave4InterruptEnabled(const bool enabled) {
  * @see MPU9250_RA_I2C_SLV4_CTRL
  */
 bool MPU9250::getSlave4WriteMode(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_I2C_SLV4_CTRL, MPU9250_I2C_SLV4_REG_DIS_BIT, buffer);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
-    }
+    uint8_t response = readMaskedRegister(MPU9250_I2C_SLV4_CTRL, MPU9250_I2C_SLV4_REG_DIS_MASK);
+    return (response != 0);
 }
 
 /** Set write mode for the Slave 4.
  * @param mode New write mode for Slave 4 (0 = register address + data, 1 = data only)
  * @see getSlave4WriteMode()
- * @see MPU9250_RA_I2C_SLV4_CTRL
+ * @see MPU9250_I2C_SLV4_CTRL
  */
 bool MPU9250::setSlave4WriteMode(const bool mode) {
-    return writeMaskedRegister(uint8_t register_addr, uint8_t mask, mode); //MPU9250_RA_I2C_SLV4_CTRL, MPU9250_I2C_SLV4_REG_DIS_BIT, mode);
+    return writeMaskedRegister(MPU9250_I2C_SLV4_CTRL, MPU9250_I2C_SLV4_REG_DIS_MASK, mode);
 }
 
 /** Get Slave 4 master delay value.
@@ -1332,7 +1286,7 @@ bool MPU9250::setSlave4WriteMode(const bool mode) {
  * @see MPU9250_RA_I2C_SLV4_CTRL
  */
 uint8_t MPU9250::getSlave4MasterDelay(void) {
-    return readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_I2C_SLV4_CTRL, MPU9250_I2C_SLV4_MST_DLY_BIT, MPU9250_I2C_SLV4_MST_DLY_LENGTH, buffer);
+    return readMaskedRegister(MPU9250_I2C_SLV4_CTRL, MPU9250_I2C_MST_DLY_MASK);
 }
 
 /** Set Slave 4 master delay value.
@@ -1341,7 +1295,7 @@ uint8_t MPU9250::getSlave4MasterDelay(void) {
  * @see MPU9250_RA_I2C_SLV4_CTRL
  */
 bool MPU9250::setSlave4MasterDelay(const uint8_t delay) {
-    return writeMaskedRegister(uint8_t register_addr, uint8_t mask, delay); //MPU9250_RA_I2C_SLV4_CTRL, MPU9250_I2C_SLV4_MST_DLY_BIT, MPU9250_I2C_SLV4_MST_DLY_LENGTH, delay);
+    return writeMaskedRegister(MPU9250_I2C_SLV4_CTRL, MPU9250_I2C_MST_DLY_MASK, delay);
 }
 
 /** Get last available byte read from Slave 4.
@@ -1363,15 +1317,11 @@ uint8_t MPU9250::getSlate4InputByte(void) {
  * bit will cause an interrupt if FSYNC_INT_EN is asserted in INT_PIN_CFG
  * (Register 55).
  * @return FSYNC interrupt status
- * @see MPU9250_RA_I2C_MST_STATUS
+ * @see MPU9250_I2C_MST_STATUS
  */
 bool MPU9250::getPassthroughStatus(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_I2C_MST_STATUS, MPU9250_MST_PASS_THROUGH_BIT, buffer);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
-    }
+    uint8_t response = readMaskedRegister(MPU9250_I2C_MST_STATUS, MPU9250_PASS_THROUGH_MASK);
+    return (response != 0);
 }
 
 /** Get Slave 4 transaction done status.
@@ -1380,15 +1330,11 @@ bool MPU9250::getPassthroughStatus(void) {
  * (Register 56) is asserted and if the SLV_4_DONE_INT bit is asserted in the
  * I2C_SLV4_CTRL register (Register 52).
  * @return Slave 4 transaction done status
- * @see MPU9250_RA_I2C_MST_STATUS
+ * @see MPU9250_I2C_MST_STATUS
  */
 bool MPU9250::getSlave4IsDone(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_I2C_MST_STATUS, MPU9250_MST_I2C_SLV4_DONE_BIT, buffer);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
-    }
+    uint8_t response = readMaskedRegister(MPU9250_I2C_MST_STATUS, MPU9250_I2C_SLV4_DONE_MASK);
+    return (response != 0);
 }
 
 /** Get master arbitration lost status.
@@ -1396,15 +1342,11 @@ bool MPU9250::getSlave4IsDone(void) {
  * the auxiliary I2C bus (an error condition). This triggers an interrupt if the
  * I2C_MST_INT_EN bit in the INT_ENABLE register (Register 56) is asserted.
  * @return Master arbitration lost status
- * @see MPU9250_RA_I2C_MST_STATUS
+ * @see MPU9250_I2C_MST_STATUS
  */
 bool MPU9250::getLostArbitration(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_I2C_MST_STATUS, MPU9250_MST_I2C_LOST_ARB_BIT, buffer);
-    if(response == 0) {
-        return false;
-    } else {
-        return true;
-    }
+    uint8_t response = readMaskedRegister(MPU9250_I2C_MST_STATUS, MPU9250_I2C_LOST_ARB_MASK);
+    return (response != 0);
 }
 
 /** Get Slave 4 NACK status.
@@ -1415,9 +1357,8 @@ bool MPU9250::getLostArbitration(void) {
  * @see MPU9250_RA_I2C_MST_STATUS
  */
 bool MPU9250::getSlave4Nack(void) {
-    return 0;
-    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_I2C_MST_STATUS, MPU9250_MST_I2C_SLV4_NACK_BIT, buffer);
-    //return (response != 0);
+    uint8_t response = readMaskedRegister(MPU9250_I2C_MST_STATUS, MPU9250_I2C_SLV4_NACK_MASK);
+    return (response != 0);
 }
 
 /** Get Slave 3 NACK status.
@@ -1428,7 +1369,7 @@ bool MPU9250::getSlave4Nack(void) {
  * @see MPU9250_RA_I2C_MST_STATUS
  */
 bool MPU9250::getSlave3Nack(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_I2C_MST_STATUS, MPU9250_MST_I2C_SLV3_NACK_BIT, buffer);
+    uint8_t response = readMaskedRegister(MPU9250_I2C_MST_STATUS, MPU9250_I2C_SLV3_NACK_MASK);
     return (response != 0);
 }
 
@@ -1440,7 +1381,7 @@ bool MPU9250::getSlave3Nack(void) {
  * @see MPU9250_RA_I2C_MST_STATUS
  */
 bool MPU9250::getSlave2Nack(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_I2C_MST_STATUS, MPU9250_MST_I2C_SLV2_NACK_BIT, buffer);
+    uint8_t response = readMaskedRegister(MPU9250_I2C_MST_STATUS, MPU9250_I2C_SLV2_NACK_MASK);
     return (response != 0);
 }
 
@@ -1452,7 +1393,7 @@ bool MPU9250::getSlave2Nack(void) {
  * @see MPU9250_RA_I2C_MST_STATUS
  */
 bool MPU9250::getSlave1Nack(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_I2C_MST_STATUS, MPU9250_MST_I2C_SLV1_NACK_BIT, buffer);
+    uint8_t response = readMaskedRegister(MPU9250_I2C_MST_STATUS, MPU9250_I2C_SLV1_NACK_MASK);
     return (response != 0);
 }
 
@@ -1464,7 +1405,7 @@ bool MPU9250::getSlave1Nack(void) {
  * @see MPU9250_RA_I2C_MST_STATUS
  */
 bool MPU9250::getSlave0Nack(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_I2C_MST_STATUS, MPU9250_MST_I2C_SLV0_NACK_BIT, buffer);
+    uint8_t response = readMaskedRegister(MPU9250_I2C_MST_STATUS, MPU9250_I2C_SLV0_NACK_MASK);
     return (response != 0);
 }
 
@@ -1477,7 +1418,7 @@ bool MPU9250::getSlave0Nack(void) {
  * @see MPU9250_INTCFG_INT_LEVEL_BIT
  */
 bool MPU9250::getInterruptMode(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_INT_LEVEL_BIT, buffer);
+    uint8_t response = readMaskedRegister(MPU9250_INT_PIN_CFG, MPU9250_ACTL_MASK);
     return (response != 0);
 }
 
@@ -1488,29 +1429,27 @@ bool MPU9250::getInterruptMode(void) {
  * @see MPU9250_INTCFG_INT_LEVEL_BIT
  */
 bool MPU9250::setInterruptMode(const bool mode) {
-   return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, mode); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_INT_LEVEL_BIT, mode);
+   return writeMaskedRegister(MPU9250_INT_PIN_CFG, MPU9250_ACTL_MASK, mode);
 }
 
 /** Get interrupt drive mode.
  * Will be set 0 for push-pull, 1 for open-drain.
  * @return Current interrupt drive mode (0=push-pull, 1=open-drain)
- * @see MPU9250_RA_INT_PIN_CFG
- * @see MPU9250_INTCFG_INT_OPEN_BIT
+ * @see MPU9250_INT_PIN_CFG
+ * @see MPU9250_OPEN_MASK
  */
 bool MPU9250::getInterruptDrive(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_INT_OPEN_BIT, buffer);
+    uint8_t response = readMaskedRegister(MPU9250_INT_PIN_CFG, MPU9250_OPEN_MASK);
     return (response != 0);
 }
 /** Set interrupt drive mode.
  * @param drive New interrupt drive mode (0=push-pull, 1=open-drain)
  * @see getInterruptDrive()
- * @see MPU9250_RA_INT_PIN_CFG
- * @see MPU9250_INTCFG_INT_OPEN_BIT
+ * @see MPU9250_INT_PIN_CFG
+ * @see MPU9250_OPEN_MASK
  */
 bool MPU9250::setInterruptDrive(const bool drive) {
-    return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, drive); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_INT_OPEN_BIT, drive);
+    return writeMaskedRegister(MPU9250_INT_PIN_CFG, MPU9250_OPEN_MASK, drive);
 }
 
 /** Get interrupt latch mode.
@@ -1520,7 +1459,7 @@ bool MPU9250::setInterruptDrive(const bool drive) {
  * @see MPU9250_INTCFG_LATCH_INT_EN_BIT
  */
 bool MPU9250::getInterruptLatch(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_LATCH_INT_EN_BIT, buffer);
+    uint8_t response = readMaskedRegister(MPU9250_INT_PIN_CFG, MPU9250_LATCH_INT_EN_MASK);
     return (response != 0);
 }
 
@@ -1531,8 +1470,7 @@ bool MPU9250::getInterruptLatch(void) {
  * @see MPU9250_INTCFG_LATCH_INT_EN_BIT
  */
 bool MPU9250::setInterruptLatch(const bool latch) {
-    return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, latch); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_LATCH_INT_EN_BIT, latch);
+    return writeMaskedRegister(MPU9250_INT_PIN_CFG, MPU9250_LATCH_INT_EN_MASK, latch);
 }
 
 /** Get interrupt latch clear mode.
@@ -1542,7 +1480,7 @@ bool MPU9250::setInterruptLatch(const bool latch) {
  * @see MPU9250_INTCFG_INT_RD_CLEAR_BIT
  */
 bool MPU9250::getInterruptLatchClear(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_INT_RD_CLEAR_BIT, buffer);
+    uint8_t response = readMaskedRegister(MPU9250_INT_PIN_CFG, MPU9250_INT_ANYRD_2CLEAR_MASK);
     return (response != 0);
 }
 
@@ -1553,8 +1491,7 @@ bool MPU9250::getInterruptLatchClear(void) {
  * @see MPU9250_INTCFG_INT_RD_CLEAR_BIT
  */
 bool MPU9250::setInterruptLatchClear(const bool clear) {
-    return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, clear); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_INT_RD_CLEAR_BIT, clear);
+    return writeMaskedRegister(MPU9250_INT_PIN_CFG, MPU9250_INT_ANYRD_2CLEAR_MASK, clear);
 }
 
 /** Get FSYNC interrupt logic level mode.
@@ -1564,7 +1501,7 @@ bool MPU9250::setInterruptLatchClear(const bool clear) {
  * @see MPU9250_INTCFG_FSYNC_INT_LEVEL_BIT
  */
 bool MPU9250::getFSyncInterruptLevel(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_FSYNC_INT_LEVEL_BIT, buffer);
+    uint8_t response = readMaskedRegister(MPU9250_INT_PIN_CFG, uint8_t mask); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_FSYNC_INT_LEVEL_BIT, buffer);
     return (response != 0);
 }
 
@@ -1576,7 +1513,7 @@ bool MPU9250::getFSyncInterruptLevel(void) {
  */
 bool MPU9250::setFSyncInterruptLevel(const bool level) {
     return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, level); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_FSYNC_INT_LEVEL_BIT, level);
+    //return writeMaskedRegister(MPU9250_INT_PIN_CFG, uint8_t mask, level); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_FSYNC_INT_LEVEL_BIT, level);
 }
 
 /** Get FSYNC pin interrupt enabled setting.
@@ -1586,7 +1523,7 @@ bool MPU9250::setFSyncInterruptLevel(const bool level) {
  * @see MPU9250_INTCFG_FSYNC_INT_EN_BIT
  */
 bool MPU9250::getFSyncInterruptEnabled(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_FSYNC_INT_EN_BIT, buffer);
+    uint8_t response = readMaskedRegister(MPU9250_INT_PIN_CFG, uint8_t mask); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_FSYNC_INT_EN_BIT, buffer);
     return (response != 0);
 }
 
@@ -1613,7 +1550,7 @@ bool MPU9250::setFSyncInterruptEnabled(const bool enabled) {
  * @see MPU9250_INTCFG_I2C_BYPASS_EN_BIT
  */
 bool MPU9250::getI2CBypassEnabled(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_I2C_BYPASS_EN_BIT, buffer);
+    uint8_t response = readMaskedRegister(MPU9250_INT_PIN_CFG, MPU9250_BYPASS_EN_MASK);
     return (response != 0);
 }
 
@@ -1629,8 +1566,7 @@ bool MPU9250::getI2CBypassEnabled(void) {
  * @see MPU9250_INTCFG_I2C_BYPASS_EN_BIT
  */
 bool MPU9250::setI2CBypassEnabled(const bool enabled) {
-    return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_I2C_BYPASS_EN_BIT, enabled);
+    return writeMaskedRegister(MPU9250_INT_PIN_CFG, MPU9250_BYPASS_EN_MASK, enabled);
 }
 
 /** Get reference clock output enabled status.
@@ -1643,7 +1579,7 @@ bool MPU9250::setI2CBypassEnabled(const bool enabled) {
  * @see MPU9250_INTCFG_CLKOUT_EN_BIT
  */
 bool MPU9250::getClockOutputEnabled(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_CLKOUT_EN_BIT, buffer);
+    uint8_t response = readMaskedRegister(MPU9250_INT_PIN_CFG, uint8_t mask); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_CLKOUT_EN_BIT, buffer);
     return (response != 0);
 }
 
@@ -1658,7 +1594,7 @@ bool MPU9250::getClockOutputEnabled(void) {
  */
 bool MPU9250::setClockOutputEnabled(const bool enabled) {
     return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_CLKOUT_EN_BIT, enabled);
+    //return writeMaskedRegister(MPU9250_INT_PIN_CFG, uint8_t mask, enabled); //MPU9250_RA_INT_PIN_CFG, MPU9250_INTCFG_CLKOUT_EN_BIT, enabled);
 }
 
 // INT_ENABLE register
@@ -1694,7 +1630,7 @@ bool MPU9250::setIntEnabled(const uint8_t enabled) {
  **/
 bool MPU9250::getIntFreefallEnabled(void) {
     return 0;
-    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_FF_BIT, buffer);
+    //uint8_t response = readMaskedRegister(MPU9250_INT_ENABLE, uint8_t mask); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_FF_BIT, buffer);
     //return (response != 0);
 }
 
@@ -1706,7 +1642,7 @@ bool MPU9250::getIntFreefallEnabled(void) {
  **/
 bool MPU9250::setIntFreefallEnabled(const bool enabled) {
     return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_FF_BIT, enabled);
+    //return writeMaskedRegister(MPU9250_INT_ENABLE, uint8_t mask, enabled); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_FF_BIT, enabled);
 }
 
 /** Get Motion Detection interrupt enabled status.
@@ -1716,7 +1652,7 @@ bool MPU9250::setIntFreefallEnabled(const bool enabled) {
  * @see MPU9250_INTERRUPT_MOT_BIT
  **/
 bool MPU9250::getIntMotionEnabled(void) {
-    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_MOT_BIT, buffer);
+    //uint8_t response = readMaskedRegister(MPU9250_INT_ENABLE, uint8_t mask); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_MOT_BIT, buffer);
     //return (response != 0);
 }
 
@@ -1728,7 +1664,7 @@ bool MPU9250::getIntMotionEnabled(void) {
  **/
 bool MPU9250::setIntMotionEnabled(const bool enabled) {
     return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_MOT_BIT, enabled);
+    //return writeMaskedRegister(MPU9250_INT_ENABLE, uint8_t mask, enabled); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_MOT_BIT, enabled);
 }
 
 /** Get Zero Motion Detection interrupt enabled status.
@@ -1739,7 +1675,7 @@ bool MPU9250::setIntMotionEnabled(const bool enabled) {
  **/
 bool MPU9250::getIntZeroMotionEnabled(void) {
     return 0;
-    //uint8_t respo = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_ZMOT_BIT, buffer);
+    //uint8_t respo = readMaskedRegister(MPU9250_INT_ENABLE, uint8_t mask); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_ZMOT_BIT, buffer);
     //return (response != 0);
 }
 
@@ -1751,7 +1687,7 @@ bool MPU9250::getIntZeroMotionEnabled(void) {
  **/
 bool MPU9250::setIntZeroMotionEnabled(const bool enabled) {
     return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_ZMOT_BIT, enabled);
+    //return writeMaskedRegister(MPU9250_INT_ENABLE, uint8_t mask, enabled); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_ZMOT_BIT, enabled);
 }
 
 /** Get FIFO Buffer Overflow interrupt enabled status.
@@ -1762,7 +1698,7 @@ bool MPU9250::setIntZeroMotionEnabled(const bool enabled) {
  **/
 bool MPU9250::getIntFIFOBufferOverflowEnabled(void) {
     return 0;
-    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_FIFO_OFLOW_BIT, buffer);
+    //uint8_t response = readMaskedRegister(MPU9250_INT_ENABLE, uint8_t mask); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_FIFO_OFLOW_BIT, buffer);
     //return (response != 0);
 }
 
@@ -1774,7 +1710,7 @@ bool MPU9250::getIntFIFOBufferOverflowEnabled(void) {
  **/
 bool MPU9250::setIntFIFOBufferOverflowEnabled(const bool enabled) {
     return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_FIFO_OFLOW_BIT, enabled);
+    //return writeMaskedRegister(MPU9250_INT_ENABLE, uint8_t mask, enabled); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_FIFO_OFLOW_BIT, enabled);
 }
 
 /** Get I2C Master interrupt enabled status.
@@ -1809,7 +1745,7 @@ bool MPU9250::setIntI2CMasterEnabled(const bool enabled) {
  * @see MPU9250_INTERRUPT_DATA_RDY_BIT
  */
 bool MPU9250::getIntDataReadyEnabled(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_DATA_RDY_BIT, buffer);
+    uint8_t response = readMaskedRegister(MPU9250_INT_ENABLE, uint8_t mask); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_DATA_RDY_BIT, buffer);
     return (response != 0);
 }
 
@@ -1821,7 +1757,7 @@ bool MPU9250::getIntDataReadyEnabled(void) {
  */
 bool MPU9250::setIntDataReadyEnabled(const bool enabled) {
     return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_DATA_RDY_BIT, enabled);
+    //return writeMaskedRegister(MPU9250_INT_ENABLE, uint8_t mask, enabled); //MPU9250_RA_INT_ENABLE, MPU9250_INTERRUPT_DATA_RDY_BIT, enabled);
 }
 
 // INT_STATUS register
@@ -1846,7 +1782,7 @@ uint8_t MPU9250::getIntStatus(void) {
  */
 bool MPU9250::getIntFreefallStatus(void) {
     return 0;
-    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_STATUS, MPU9250_INTERRUPT_FF_BIT, buffer);
+    //uint8_t response = readMaskedRegister(MPU9250_INT_ENABLE, uint8_t mask); //MPU9250_RA_INT_STATUS, MPU9250_INTERRUPT_FF_BIT, buffer);
     //return (response != 0);
 }
 
@@ -1859,7 +1795,7 @@ bool MPU9250::getIntFreefallStatus(void) {
  */
 bool MPU9250::getIntMotionStatus(void) {
     return 0;
-    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_STATUS, MPU9250_INTERRUPT_MOT_BIT, buffer);
+    //uint8_t response = readMaskedRegister(MPU9250_INT_ENABLE, uint8_t mask); //MPU9250_RA_INT_STATUS, MPU9250_INTERRUPT_MOT_BIT, buffer);
     //return (response != 0);
 }
 
@@ -1872,7 +1808,7 @@ bool MPU9250::getIntMotionStatus(void) {
  */
 bool MPU9250::getIntZeroMotionStatus(void) {
     return 0;
-    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_STATUS, MPU9250_INTERRUPT_ZMOT_BIT, buffer);
+    //uint8_t response = readMaskedRegister(MPU9250_INT_ENABLE, uint8_t mask); //MPU9250_RA_INT_STATUS, MPU9250_INTERRUPT_ZMOT_BIT, buffer);
     //return (response != 0);
 }
 
@@ -1885,7 +1821,7 @@ bool MPU9250::getIntZeroMotionStatus(void) {
  */
 bool MPU9250::getIntFIFOBufferOverflowStatus(void) {
     return 0;
-    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_STATUS, MPU9250_INTERRUPT_FIFO_OFLOW_BIT, buffer);
+    //uint8_t response = readMaskedRegister(MPU9250_INT_ENABLE, uint8_t mask); //MPU9250_RA_INT_STATUS, MPU9250_INTERRUPT_FIFO_OFLOW_BIT, buffer);
     //return (response != 0);
 }
 
@@ -1899,7 +1835,7 @@ bool MPU9250::getIntFIFOBufferOverflowStatus(void) {
  */
 bool MPU9250::getIntI2CMasterStatus(void) {
     return 0;
-    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_STATUS, MPU9250_INTERRUPT_I2C_MST_INT_BIT, buffer);
+    //uint8_t response = readMaskedRegister(MPU9250_INT_ENABLE, uint8_t mask); //MPU9250_RA_INT_STATUS, MPU9250_INTERRUPT_I2C_MST_INT_BIT, buffer);
     //eturn (response != 0);
 }
 
@@ -1912,7 +1848,7 @@ bool MPU9250::getIntI2CMasterStatus(void) {
  */
 bool MPU9250::getIntDataReadyStatus(void) {
     return 0;
-    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_INT_STATUS, MPU9250_INTERRUPT_DATA_RDY_BIT, buffer);
+    //uint8_t response = readMaskedRegister(MPU9250_INT_ENABLE, uint8_t mask); //MPU9250_RA_INT_STATUS, MPU9250_INTERRUPT_DATA_RDY_BIT, buffer);
     //return (response != 0);
 }
 
@@ -2003,7 +1939,6 @@ uint8_t MPU9250::getExternalSensorByte(int position) {
  */
 uint16_t MPU9250::getExternalSensorWord(int position) {
     return readRegisters(MPU9250_EXT_SENS_DATA_00 + position, MPU9250_EXT_SENS_DATA_01 + position);
-    //return (((uint16_t)buffer[0]) << 8) | buffer[1];
 }
 
 /** Read double word (4 bytes) from external sensor data registers.
@@ -2107,7 +2042,9 @@ bool MPU9250::getZeroMotionDetected(void) {
  * @see MPU9250_RA_I2C_SLV0_DO
  */
 bool MPU9250::setSlaveOutputByte(uint8_t num, const uint8_t data) {
-    if (num > 3) return;
+    if (num > 3) {
+        return 0;
+    }
     return writeRegister(MPU9250_RA_I2C_SLV0_DO + num, data);
 }
 
@@ -2118,24 +2055,22 @@ bool MPU9250::setSlaveOutputByte(uint8_t num, const uint8_t data) {
  * shadowing. When DELAY_ES_SHADOW is set to 1, shadowing of external
  * sensor data is delayed until all data has been received.
  * @return Current external data shadow delay enabled status.
- * @see MPU9250_RA_I2C_MST_DELAY_CTRL
+ * @see MPU9250_I2C_MST_DELAY_CTRL
  * @see MPU9250_DELAYCTRL_DELAY_ES_SHADOW_BIT
  */
 bool MPU9250::getExternalShadowDelayEnabled(void) {
-    return 0;
-    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_I2C_MST_DELAY_CTRL, MPU9250_DELAYCTRL_DELAY_ES_SHADOW_BIT, buffer);
-    //return (response != 0);
+    uint8_t response = readMaskedRegister(MPU9250_I2C_MST_DELAY_CTRL, MPU9250_DELAY_ES_SHADOW_MASK);
+    return (response != 0);
 }
 
 /** Set external data shadow delay enabled status.
  * @param enabled New external data shadow delay enabled status.
  * @see getExternalShadowDelayEnabled()
- * @see MPU9250_RA_I2C_MST_DELAY_CTRL
+ * @see MPU9250_I2C_MST_DELAY_CTRL
  * @see MPU9250_DELAYCTRL_DELAY_ES_SHADOW_BIT
  */
 bool MPU9250::setExternalShadowDelayEnabled(const bool enabled) {
-    return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_I2C_MST_DELAY_CTRL, MPU9250_DELAYCTRL_DELAY_ES_SHADOW_BIT, enabled);
+    return writeMaskedRegister(MPU9250_I2C_MST_DELAY_CTRL, MPU9250_DELAY_ES_SHADOW_MASK, enabled);
 }
 
 /** Get slave delay enabled status.
@@ -2157,9 +2092,9 @@ bool MPU9250::setExternalShadowDelayEnabled(const bool enabled) {
  * @see MPU9250_DELAYCTRL_I2C_SLV0_DLY_EN_BIT
  */
 bool MPU9250::getSlaveDelayEnabled(const uint8_t num) {
-    // MPU9250_DELAYCTRL_I2C_SLV4_DLY_EN_BIT is 4, SLV3 is 3, etc.
+    // MPU9250_DELAYCTRL_I2C_SLV4_DLY_EN_BIT is 4, SLV3 is 3, etc. //sweet jesus something is wrong here
     if (num > 4) return 0;
-    uint8_t response = returnreadMaskedRegister(uint8_t register_addr, num); //MPU9250_RA_I2C_MST_DELAY_CTRL, num, buffer);
+    uint8_t response = readMaskedRegister(MPU9250_I2C_MST_DELAY_CTRL, num); //MPU9250_RA_I2C_MST_DELAY_CTRL, num, buffer);
     return (response != 0);
 }
 
@@ -2336,7 +2271,7 @@ void MPU9250::setMotionDetectionCounterDecrement(const uint8_t decrement) {
  * @see MPU9250_USERCTRL_FIFO_EN_BIT
  */
 bool MPU9250::getFIFOEnabled(void) {
-    uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_USER_CTRL, MPU9250_USERCTRL_FIFO_EN_BIT, buffer);
+    uint8_t response = readMaskedRegister(MPU9250_USER_CTRL, MPU9250_FIFO_EN_MASK);
     return (response != 0);
 }
 
@@ -2347,8 +2282,7 @@ bool MPU9250::getFIFOEnabled(void) {
  * @see MPU9250_USERCTRL_FIFO_EN_BIT
  */
 bool MPU9250::setFIFOEnabled(const bool enabled) {
-    return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_USER_CTRL, MPU9250_USERCTRL_FIFO_EN_BIT, enabled);
+    return writeMaskedRegister(MPU9250_USER_CTRL, MPU9250_FIFO_EN_MASK, enabled);
 }
 
 /** Get I2C Master Mode enabled status.
@@ -2363,9 +2297,8 @@ bool MPU9250::setFIFOEnabled(const bool enabled) {
  * @see MPU9250_USERCTRL_I2C_MST_EN_BIT
  */
 bool MPU9250::getI2CMasterModeEnabled(void) {
-    return 0;
-    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_USER_CTRL, MPU9250_USERCTRL_I2C_MST_EN_BIT, buffer);
-    //return (response != 0);
+    uint8_t response = readMaskedRegister(MPU9250_USER_CTRL, MPU9250_I2C_MST_EN_MASK);
+    return (response != 0);
 }
 
 /** Set I2C Master Mode enabled status.
@@ -2375,8 +2308,7 @@ bool MPU9250::getI2CMasterModeEnabled(void) {
  * @see MPU9250_USERCTRL_I2C_MST_EN_BIT
  */
 bool MPU9250::setI2CMasterModeEnabled(const bool enabled) {
-    return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_USER_CTRL, MPU9250_USERCTRL_I2C_MST_EN_BIT, enabled);
+    return writeMaskedRegister(MPU9250_USER_CTRL, MPU9250_I2C_MST_EN_MASK, enabled);
 }
 
 /** Switch from I2C to SPI mode (MPU-6000 only)
@@ -2384,8 +2316,7 @@ bool MPU9250::setI2CMasterModeEnabled(const bool enabled) {
  * disabled primary I2C interface.
  */
 bool MPU9250::switchSPIEnabled(const bool enabled) {
-    return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_USER_CTRL, MPU9250_USERCTRL_I2C_IF_DIS_BIT, enabled);
+    return writeMaskedRegister(MPU9250_USER_CTRL, MPU9250_I2C_IF_DIS_MASK, enabled);
 }
 
 /** Reset the FIFO.
@@ -2395,8 +2326,7 @@ bool MPU9250::switchSPIEnabled(const bool enabled) {
  * @see MPU9250_USERCTRL_FIFO_RESET_BIT
  */
 bool MPU9250::resetFIFO(void) {
-    return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, true); //MPU9250_RA_USER_CTRL, MPU9250_USERCTRL_FIFO_RESET_BIT, true);
+    return writeMaskedRegister(MPU9250_USER_CTRL, MPU9250_FIFO_RST_MASK, true);
 }
 
 /** Reset the I2C Master.
@@ -2406,8 +2336,7 @@ bool MPU9250::resetFIFO(void) {
  * @see MPU9250_USERCTRL_I2C_MST_RESET_BIT
  */
 bool MPU9250::resetI2CMaster(void) {
-    return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, true); //MPU9250_RA_USER_CTRL, MPU9250_USERCTRL_I2C_MST_RESET_BIT, true);
+    return writeMaskedRegister(MPU9250_USER_CTRL, MPU9250_I2C_MST_RST_MASK, true);
     // Set X-axis accelerometer standby enabled status.
 }
 
@@ -2424,12 +2353,10 @@ bool MPU9250::resetI2CMaster(void) {
  * @see MPU9250_USERCTRL_SIG_COND_RESET_BIT
  */
 bool MPU9250::resetSensors(void) {
-    return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, true); //MPU9250_RA_USER_CTRL, MPU9250_USERCTRL_SIG_COND_RESET_BIT, true);
+    return writeMaskedRegister(MPU9250_USER_CTRL, MPU9250_SIG_COND_RST_MASK, true);
 }
 
 ///** Set X-axis accelerometer standby enabled status.
- PWR_MGMT_1 register
 
 /** Trigger a full device reset.
  * A small delay of ~50ms may be desirable after triggering a reset.
@@ -2437,8 +2364,7 @@ bool MPU9250::resetSensors(void) {
  * @see MPU9250_PWR1_DEVICE_RESET_BIT
  */
 bool MPU9250::reset(void) {
-    return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, true); //MPU9250_RA_PWR_MGMT_1, MPU9250_PWR1_DEVICE_RESET_BIT, true);
+    return writeMaskedRegister(MPU9250_PWR_MGMT_1, MPU9250_H_RESET_MASK, true);
 }
 
 /** Get sleep mode status.
@@ -2454,9 +2380,8 @@ puts the device back into normal mode. To save power, the individual standby
  * @see MPU9250_PWR1_SLEEP_BIT
  */
 bool MPU9250::getSleepEnabled(void) {
-    return 0;
-    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_PWR_MGMT_1, MPU9250_PWR1_SLEEP_BIT, buffer);
-    //return (response != 0);
+    uint8_t response = readMaskedRegister(MPU9250_PWR_MGMT_1, MPU9250_SLEEP_MASK);
+    return (response != 0);
 }
 
 /** Set sleep mode status.
@@ -2466,9 +2391,8 @@ bool MPU9250::getSleepEnabled(void) {
  * @see MPU9250_PWR1_SLEEP_BIT
  */
 bool MPU9250::setSleepEnabled(const bool enabled) {
-   // Set X-axis accelerometer standby enabled status.
-    return 0;
-    //return writeMaskedRegister(uint8_t register_addr, uint8_t mask, enabled); //MPU9250_RA_PWR_MGMT_1, MPU9250_PWR1_SLEEP_BIT, enabled);
+    // Set X-axis accelerometer standby enabled status.
+    return writeMaskedRegister(MPU9250_PWR_MGMT_1, MPU9250_SLEEP_MASK, enabled);
 }
 
 /** Get wake cycle enabled status.
@@ -2480,9 +2404,8 @@ bool MPU9250::setSleepEnabled(const bool enabled) {
  * @see MPU9250_PWR1_CYCLE_BIT
  */
 bool MPU9250::getWakeCycleEnabled(void) {
-    return 0;
-    //uint8_t response = readMaskedRegister(uint8_t register_addr, uint8_t mask); //MPU9250_RA_PWR_MGMT_1, MPU9250_PWR1_CYCLE_BIT, buffer);
-    //return (response != 0);
+    uint8_t response = readMaskedRegister(MPU9250_PWR_MGMT_1, MPU9250_CYCLE_MASK);
+    return (response != 0);
 }
 
 /** Set wake cycle enabled status.
