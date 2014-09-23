@@ -10,7 +10,9 @@
 * PLEASE KEEP THIS IN MIND IF YOU DECIDE TO USE THIS PARTICULAR CODE FOR ANYTHING.
 */
 
+#include "stdint.h"
 #include "MPU9250.h"
+#include "Wire.h"
 
 /** Default constructor, uses default I2C address.
  * @see MPU9250_DEFAULT_ADDRESS
@@ -19,23 +21,17 @@ MPU9250::MPU9250() {
     _address = MPU9250_DEFAULT_ADDRESS;
 }
 
-/** Specific address constructor.
- * @param address I2C address
- * @see MPU9250_DEFAULT_ADDRESS
- * @see MPU9250_ADDRESS_AD0_LOW
- * @see MPU9250_ADDRESS_AD0_HIGH
- */
-bool MPU9250::MPU9250(uint8_t address) {
-    _address = address;
-    return false
-}
-
 bool MPU9250::writeRegister(const uint8_t register_addr, const uint8_t value) {
     //send write call to sensor address
     //send register address to sensor
     //send value to register
-    //bool write status = 0;
-    return 0; //returns whether the write succeeded or failed
+    bool write_status = 0;
+    Wire.beginTransmission(_address); //open communication with 
+    Wire.write(register_addr);  
+    Wire.write(value); 
+    Wire.endTransmission(); 
+
+    return write_status; //returns whether the write succeeded or failed
 }
 
 bool MPU9250::writeRegisters(const uint8_t msb_register, const uint8_t msb_value, const uint8_t lsb_register, const uint8_t lsb_value) { 
@@ -58,6 +54,17 @@ uint8_t MPU9250::readRegister(const uint8_t register_addr) {
     //call sensor by address
     //call registers
     uint8_t data = 0;
+
+    Wire.beginTransmission(_address); 
+    Wire.write(register_addr); 
+    Wire.endTransmission(); 
+
+    Wire.requestFrom((int)_address, 1);
+
+    while(Wire.available()) {
+        data = Wire.read();    // receive a byte as character
+    }
+
     return data; //return the data returned from the register
 }
 
@@ -83,6 +90,8 @@ uint8_t MPU9250::readMaskedRegister(const uint8_t register_addr, const uint8_t m
  * the default internal clock source.
  */
 void MPU9250::initialize(void) {
+    Wire.begin(); 
+
     setClockSource(MPU9250_CLOCK_PLL_XGYRO);
     setFullScaleGyroRange(MPU9250_GYRO_FS_250);
     setFullScaleAccelRange(MPU9250_ACCEL_FS_2);

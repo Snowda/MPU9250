@@ -330,8 +330,6 @@
 class MPU9250 {
     public:
         MPU9250();
-        bool MPU9150(uint8_t address);
-
         void initialize();
 
         uint8_t getAuxVDDIOLevel(void);
