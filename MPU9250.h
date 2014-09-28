@@ -16,6 +16,9 @@
 #include <avr/pgmspace.h>
 //MPU9250 Register map
 
+#define MPU9250_DEFAULT_ADDRESS         0xD1
+#define MPU9250_ALT_DEFAULT_ADDRESS     0xD2   
+
 #define MPU9250_SELF_TEST_X_GYRO        0x00
 #define MPU9250_SELF_TEST_Y_GYRO        0x01
 #define MPU9250_SELF_TEST_Z_GYRO        0x02
@@ -144,11 +147,21 @@
 #define MPU9250_GYRO_FS_SEL_MASK        0x18
 #define MPU9250_FCHOICE_B_MASK          0x03
 
+#define MPU9250_GYRO_FULL_SCALE_250DPS  0
+#define MPU9250_GYRO_FULL_SCALE_500DPS  1
+#define MPU9250_GYRO_FULL_SCALE_1000DPS 2
+#define MPU9250_GYRO_FULL_SCALE_2000DPS 3
+
 //ACCEL_CONFIG register masks
 #define MPU9250_AX_ST_EN_MASK           0x80
 #define MPU9250_AY_ST_EN_MASK           0x40
 #define MPU9250_AZ_ST_EN_MASK           0x20
 #define MPU9250_ACCEL_FS_SEL_MASK       0x18
+
+#define MPU9250_FULL_SCALE_2G           0
+#define MPU9250_FULL_SCALE_4G           1
+#define MPU9250_FULL_SCALE_8G           2
+#define MPU9250_FULL_SCALE_16G          3
 
 //ACCEL_CONFIG_2 register masks
 #define MPU9250_ACCEL_FCHOICE_B_MASK    0xC0
@@ -304,6 +317,8 @@
 #define MPU9250_DISABLE_XYZG_MASK       0x07
 
 //Magnetometer register maps
+#define MPU9250_MAG_ADDRESS             0x0C
+
 #define MPU9250_MAG_WIA                 0x00
 #define MPU9250_MAG_INFO                0x01
 #define MPU9250_MAG_ST1                 0x02
@@ -639,14 +654,17 @@ class MPU9250 {
 
     private:
         bool writeRegister(const uint8_t register_addr, const uint8_t value);
+        bool writeMagRegister(const uint8_t register_addr, const uint8_t value);
         bool writeRegisters(const uint8_t msb_register, const uint8_t msb_value, const uint8_t lsb_register, const uint8_t lsb_value);
         bool writeMaskedRegister(const uint8_t register_addr, const uint8_t mask, const uint8_t value);
 
         uint8_t readRegister(const uint8_t register_addr);
+        uint8_t readMagRegister(const uint8_t register_addr);
         uint16_t readRegisters(const uint8_t msb_register, const uint8_t lsb_register);
         uint8_t readMaskedRegister(const uint8_t register_addr, const uint8_t mask);
 
         uint8_t _address;
+        uint8_t _mag_address;
         uint8_t _whoami;
         int16_t _temperature;
 };
