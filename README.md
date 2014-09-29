@@ -14,4 +14,10 @@ To be documented
 Disclaimer:
 ===============
 
-I was not expecting this much attention this early in developement honestly. Most of this code is incomplete and broken. This will change in the coming weeks but for now I just ask to be either patient, or fork it. Also, while I will now be reviewing the license agreement, the end result will both be allowed for private and public usage, just don't hold me to any commercial support. With this in mind I will glady accept pull requests fixes etc. as I do like to end up with good code.
+I was not expecting this much attention this early in developement honestly. 
+
+A large portion of this code is incomplete and broken. For now I just ask to be either patient, or fork it. 
+
+Also, while I will now be reviewing the license agreement, the end result will both be allowed for private and public usage, just don't hold me to any commercial support. 
+
+With this in mind please submit any pull requests and I will glady accept them once tested as I do like to end up with good code.
