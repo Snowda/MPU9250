@@ -1,5 +1,5 @@
 MPU9250
-=====================
+======================
 
 C++ MPU9250 Driver for Arduino
 
@@ -7,8 +7,9 @@ C++ MPU9250 Driver for Arduino
 
 ![MPU-9250 registry map (PDF)](store.invensense.com/Datasheets/invensense/RM-MPU-9250A-00.pdf)
 
-Installation
+
 ======================
+Installation
 
 Requires the Arduino Libraries
 ![Wire.h](http://arduino.cc/en/reference/wire) 
@@ -24,14 +25,15 @@ Sketch -> Import Library -> Add Library
 
 Make sure that if you are installing updates that you remove any pre-existing libraries called "MPU9250".
 
-Capibilities
 ======================
+Capibilities
+
 Reads accelerometer, gyroscopic and magnetic data in 3D giving 9 Degrees of Freedom.
 
 More to be documented
 
-Disclaimer:
 ======================
+Disclaimer:
 
 I was not expecting this much attention this early in developement honestly. 
 
