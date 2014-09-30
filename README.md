@@ -7,6 +7,23 @@ C++ MPU9250 Driver for Arduino
 
 ![MPU-9250 registry map (PDF)](store.invensense.com/Datasheets/invensense/RM-MPU-9250A-00.pdf)
 
+Installation
+======================
+
+Requires the Arduino Libraries
+![Wire.h](http://arduino.cc/en/reference/wire) 
+and 
+![SPI.h](http://arduino.cc/en/Reference/SPI) 
+depending on how you wish to interface with the chip.
+
+*warning* SPI not supported yet!
+
+Download the repo as a zip file and install throught the Arduino IDE and select:
+
+Sketch -> Import Library -> Add Library
+
+Make sure that if you are installing updates that you remove any pre-existing libraries called "MPU9250".
+
 Capibilities
 ======================
 Reads accelerometer, gyroscopic and magnetic data in 3D giving 9 Degrees of Freedom.
