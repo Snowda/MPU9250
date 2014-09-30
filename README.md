@@ -3,9 +3,9 @@ MPU9250
 
 C++ MPU9250 Driver for Arduino
 
-MPU-9250 datasheet can be found here: www.invensense.com/mems/gyro/documents/PS-MPU-9250A-01.pdf
+![MPU-9250 datasheet (PDF)](www.invensense.com/mems/gyro/documents/PS-MPU-9250A-01.pdf)
 
-MPU-9250 registry map can be found here: store.invensense.com/Datasheets/invensense/RM-MPU-9250A-00.pdf
+![MPU-9250 registry map (PDF)](store.invensense.com/Datasheets/invensense/RM-MPU-9250A-00.pdf)
 
 Capibilities
 ======================
