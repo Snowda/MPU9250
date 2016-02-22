@@ -59,9 +59,11 @@ bool MPU9250::writeRegisters(const uint8_t msb_register, const uint8_t msb_value
 }
 
 bool MPU9250::writeMaskedRegister(const uint8_t register_addr, const uint8_t mask, const uint8_t value) {
-    uint8_t masked_value = (mask & value); //there has to be an easier way to do this.... I know, I know, shut up, I know it's that, I'll get around to it when I can ok?
-    return writeRegister(register_addr, masked_value);
-    //every reference to this is wrong (also)!! fix them!
+    uint8_t masked_value = (mask & value);
+    uint8_t regvalue = readRegister(register_addr);
+    regvalue = regvalue & ~mask; // Zero Mask bits
+    regvalue = regvalue | masked_value; //Set Mask value
+    return writeRegister(register_addr, regvalue);
 }
 
 uint8_t MPU9250::readRegister(const uint8_t register_addr) {
