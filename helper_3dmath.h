@@ -89,19 +89,20 @@ class Quaternion {
         }
 };
 
-class VectorInt16 {
+template<typename T>
+class Vector {
     public:
-        int16_t x;
-        int16_t y;
-        int16_t z;
+        T x;
+        T y;
+        T z;
 
-        VectorInt16() {
+        Vector() {
             x = 0;
             y = 0;
             z = 0;
         }
         
-        VectorInt16(int16_t nx, int16_t ny, int16_t nz) {
+        VectorInt16(T nx, T ny, T nz) {
             x = nx;
             y = ny;
             z = nz;
@@ -118,8 +119,10 @@ class VectorInt16 {
             z /= m;
         }
         
-        VectorInt16 getNormalized() {
-            VectorInt16 r(x, y, z);
+        template<typename U = float>
+        Vector<U> getNormalized() {
+            // it doesn't make any sense for this to return a Vector<int16_t>, which would be all zero!
+            Vector<U> r(x, y, z);
             r.normalize();
             return r;
         }
@@ -149,68 +152,20 @@ class VectorInt16 {
             z = p.z;
         }
 
-        VectorInt16 getRotated(Quaternion *q) {
-            VectorInt16 r(x, y, z);
+        Vector<T> getRotated(Quaternion *q) {
+            Vector<T> r(x, y, z);
             r.rotate(q);
             return r;
         }
-};
-
-class VectorFloat {
-    public:
-        float x;
-        float y;
-        float z;
-
-        VectorFloat() {
-            x = 0;
-            y = 0;
-            z = 0;
-        }
-        
-        VectorFloat(float nx, float ny, float nz) {
-            x = nx;
-            y = ny;
-            z = nz;
-        }
-
-        float getMagnitude() {
-            return sqrt(x*x + y*y + z*z);
-        }
-
-        void normalize() {
-            float m = getMagnitude();
-            x /= m;
-            y /= m;
-            z /= m;
-        }
-        
-        VectorFloat getNormalized() {
-            VectorFloat r(x, y, z);
-            r.normalize();
-            return r;
-        }
-        
-        void rotate(Quaternion *q) {
-            Quaternion p(0, x, y, z);
-
-            // quaternion multiplication: q * p, stored back in p
-            p = q -> getProduct(p);
-
-            // quaternion multiplication: p * conj(q), stored back in p
-            p = p.getProduct(q -> getConjugate());
-
-            // p quaternion is now [0, x', y', z']
-            x = p.x;
-            y = p.y;
-            z = p.z;
-        }
-
-        VectorFloat getRotated(Quaternion *q) {
-            VectorFloat r(x, y, z);
-            r.rotate(q);
-            return r;
+    
+        template<typename U>
+        explicit operator Vector<U>() {
+            return Vector<U>(static_cast<U>(x), static_cast<U>(y), static_cast<U>(z));  
         }
 };
+
+// for backwards compatibility
+typedef Vector<float> VectorFloat;
+typedef Vector<int16_t> VectorInt16;
 
 #endif /* _HELPER_3DMATH_H_ */
