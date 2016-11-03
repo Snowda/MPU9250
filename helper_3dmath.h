@@ -157,8 +157,14 @@ class Vector {
             r.rotate(q);
             return r;
         }
+    
+        template<typename U>
+        explicit operator Vector<U>() {
+            return Vector<U>(static_cast<U>(x), static_cast<U>(y), static_cast<U>(z));  
+        }
 };
 
+// for backwards compatibility
 typedef Vector<float> VectorFloat;
 typedef Vector<int16_t> VectorInt16;
 
